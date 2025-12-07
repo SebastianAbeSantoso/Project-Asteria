@@ -28,6 +28,10 @@ public class TestingAIController {
     private void handleInput(ActionEvent event) {
         String prompt = promptInput.getText();
         AIresult = sendMsg.sendMessage(prompt);
+
+
+        System.out.println("prompt    = " + prompt);
+        System.out.println("AIresult  = " + AIresult);
         result.setText(AIresult);
     }
 }

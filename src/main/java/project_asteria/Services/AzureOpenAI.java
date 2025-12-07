@@ -17,6 +17,7 @@ public class AzureOpenAI implements SendMessage, ShowMessage {
     private final Kernel kernel;
     private String reply;
     private String userInput;
+    StringBuilder sb = new StringBuilder();
 
     public AzureOpenAI() {
         this.client = new OpenAIClientBuilder()
@@ -25,7 +26,7 @@ public class AzureOpenAI implements SendMessage, ShowMessage {
                 .buildAsyncClient();
 
         this.chatService = OpenAIChatCompletion.builder()
-                .withModelId("gpt-4.1")
+                .withModelId("gpt-5.1-chat")
                 .withOpenAIAsyncClient(client)
                 .build();
 
@@ -35,19 +36,28 @@ public class AzureOpenAI implements SendMessage, ShowMessage {
 
     }
 
-
-    public String sendMessage (String userInput){
+    @Override
+    public String sendMessage (String userInput) {
         List<ChatMessageContent<?>> results = chatService
-                .getChatMessageContentsAsync(userInput, kernel, new InvocationContext
-                        .Builder()
-                        .build())
+                .getChatMessageContentsAsync(userInput, kernel,
+                        new InvocationContext.Builder()
+                                .build())
                 .block();
-        this.userInput = userInput;
-        reply = results.get(0).getContent();
+        for (ChatMessageContent<?> msg : results) {
+            sb.append(msg.getContent());
+
+        }
+
+        if (sb.indexOf(userInput) == 0) {
+            sb.delete(0, userInput.length());
+        }
+
+        reply = sb.toString();
         return reply;
     }
 
-        public void showMessage () {
-            System.out.println("AI: " + reply);
+    @Override
+    public void showMessage () {
+        System.out.println("AI: " + reply);
     }
 }
