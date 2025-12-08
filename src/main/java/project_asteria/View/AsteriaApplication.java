@@ -14,7 +14,7 @@ public class TestingAIView extends Application {
     public void start(Stage stage) throws IOException {
         AzureOpenAI ai = new AzureOpenAI();
         TestingAIController controller = new TestingAIController(ai, ai);
-        FXMLLoader fxmlLoader = new FXMLLoader(TestingAIView.class.getResource("/project_asteria/testing-ui.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/project_asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         stage.setTitle("XPresso Sign Up");
