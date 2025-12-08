@@ -44,7 +44,7 @@ public class DatabaseManager {
                     CREATE TABLE IF NOT EXISTS watchlist (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id  INTEGER NOT NULL,
-                    symbol TEXT NOT NULL, -- 'BTCUSD, 'BTCIDR', 'BBCA.JK'
+                    symbol TEXT NOT NULL,
                     nickname TEXT,
                     is_active INTEGER NOT NULL DEFAULT 1,
                     FOREIGN KEY (user_id) REFERENCES users(id)
@@ -55,7 +55,7 @@ public class DatabaseManager {
                     CREATE TABLE IF NOT EXISTS price_history (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     symbol TEXT NOT NULL,
-                    date TEXT NOT NULL, --  'YYYY-MM-DD'
+                    date TEXT NOT NULL,
                     open REAL,
                     high REAL,
                     low REAL,
@@ -69,7 +69,7 @@ public class DatabaseManager {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     symbol TEXT NOT NULL,
                     created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-                    direction TEXT, -- 'UP', 'DOWN', 'NEUTRAL'
+                    direction TEXT,
                     prob_up REAL,
                     prob_down REAL,
                     prob_neutral REAL,
@@ -82,18 +82,6 @@ public class DatabaseManager {
             stmt.execute(createWatchlistTable);
             stmt.execute(createPriceHistoryTable);
             stmt.execute(createInsightLogsTable);
-        }
-    }
-    public static void debugPrintTables() throws SQLException {
-        try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(
-                     "SELECT name FROM sqlite_master WHERE type='table'")) {
-
-            System.out.println("Tables in DB:");
-            while (rs.next()) {
-                System.out.println(" - " + rs.getString("name"));
-            }
         }
     }
 }

@@ -4,12 +4,9 @@ package project_asteria.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import project_asteria.Database.DatabaseManager;
+
 import project_asteria.Services.SendMessage;
 import project_asteria.Services.ShowMessage;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class TestingAIController {
     private String prompt;
@@ -37,19 +34,5 @@ public class TestingAIController {
         System.out.println("AIresult  = " + AIresult + "\n");
         result.setText(AIresult+ "\n");
 
-    }
-    public void testInsertUser() {
-        try (Connection conn = DatabaseManager.getConnection();
-             PreparedStatement ps = conn.prepareStatement(
-                     "INSERT INTO users (username, display_name) VALUES (?, ?)")) {
-
-            ps.setString(1, "demo");
-            ps.setString(2, "Demo User");
-            ps.executeUpdate();
-
-            System.out.println("Insert user OK");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

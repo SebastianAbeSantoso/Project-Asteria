@@ -21,8 +21,6 @@ public class AsteriaApplication extends Application {
             e.printStackTrace();
         }
 
-        DatabaseManager.debugPrintTables();
-
         AzureOpenAI ai = new AzureOpenAI();
 
         TestingAIController controller = new TestingAIController(ai, ai);
