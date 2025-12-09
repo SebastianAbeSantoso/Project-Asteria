@@ -21,8 +21,11 @@
         </Label>
 
         <TextField fx:id="promptInput" alignment="CENTER" maxWidth="420" prefHeight="42.0" />
+        <TextField fx:id="calcModeInput" alignment="CENTER" maxWidth="420" prefHeight="42.0" text="ema, sma, macd"/>
 
         <Button fx:id="inputButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="420" onAction="#handleInput" prefHeight="40.0" text="ai" />
+        <Button fx:id="importButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="420" onAction="#handleImport" prefHeight="40.0" text="import" />
+        <Button fx:id="calcButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="420" onAction="#handleCalc" prefHeight="40.0" text="calc is short for calculator" />
 
         <TextArea fx:id="result" maxWidth="420" prefHeight="240.0" prefWidth="420.0">
             <VBox.margin>

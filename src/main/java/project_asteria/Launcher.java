@@ -1,7 +1,7 @@
 package project_asteria;
 
 import javafx.application.Application;
-import project_asteria.View.AsteriaApplication;
+import project_asteria.View.Application.AsteriaApplication;
 
 public class Launcher {
     public static void main(String[] args) {

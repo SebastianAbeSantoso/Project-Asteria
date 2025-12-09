@@ -11,14 +11,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriceHistoryRepository {
+public class PriceHistoryRepository implements LoadCandles {
 
-    public void saveCandles(String symbol, List<PriceCandle> candles) throws SQLException {
-        String deleteSQL = "DELETE FROM candles WHERE symbol = ?";
-        String insertSQL = """
-                INSERT INTO price_history (symbol, date, open, high, low, close, volume
-                VALUES (?, ?, ?, ?, ?, ?, ?);
-                """;
+    public void saveCandles(String symbol, List<PriceCandle> price_history) throws SQLException {
+        String deleteSQL = "DELETE FROM price_history WHERE symbol = ?";
+        String insertSQL = "INSERT INTO price_history" +
+                "(symbol, date, open, high, low, close, volume)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conn = DatabaseManager.getConnection();) {
             conn.setAutoCommit(false);
@@ -29,7 +28,7 @@ public class PriceHistoryRepository {
                 deleteStmt.setString(1, symbol);
                 deleteStmt.executeUpdate();
 
-                for (PriceCandle candle : candles) {
+                for (PriceCandle candle : price_history) {
                     insertStmt.setString(1, symbol);
                     insertStmt.setString(2, candle.getDate().toString());
                     insertStmt.setDouble(3, candle.getOpen());

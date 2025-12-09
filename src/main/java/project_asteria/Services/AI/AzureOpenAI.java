@@ -1,4 +1,4 @@
-package project_asteria.Services;
+package project_asteria.Services.AI;
 
 import com.azure.ai.openai.OpenAIAsyncClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
@@ -11,7 +11,7 @@ import com.microsoft.semantickernel.services.chatcompletion.ChatMessageContent;
 
 import java.util.List;
 
-public class AzureOpenAI implements SendMessage, ShowMessage {
+public class AzureOpenAI implements SendMessage {
     private final OpenAIAsyncClient client;
     private final ChatCompletionService chatService;
     private final Kernel kernel;
@@ -54,10 +54,5 @@ public class AzureOpenAI implements SendMessage, ShowMessage {
 
         reply = sb.toString();
         return reply;
-    }
-
-    @Override
-    public void showMessage () {
-        System.out.println("AI: " + reply);
     }
 }
