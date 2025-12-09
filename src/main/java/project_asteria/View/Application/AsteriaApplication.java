@@ -30,12 +30,12 @@ public class AsteriaApplication extends Application {
         PriceHistoryRepository repository = new PriceHistoryRepository();
         SmaCalculator smaCalculator = new SmaCalculator();
         EmaCalculator emaCalculator = new EmaCalculator();
-        EmaCalcValue emaValue = new EmaCalculator();
-        MacdCalculator macdCalculator = new MacdCalculator(emaValue);
+        MacdCalculator macdCalculator = new MacdCalculator(emaCalculator);
+        RsiCalculator rsiCalculator = new RsiCalculator();
 
-        StockService stockService = new StockService(repository, smaCalculator, emaCalculator, macdCalculator);
+        StockService stockService = new StockService(repository, smaCalculator, emaCalculator, macdCalculator, rsiCalculator);
 
-        TestingAIController controller = new TestingAIController(ai, csvImporter, stockService, stockService, stockService);
+        TestingAIController controller = new TestingAIController(ai, csvImporter, stockService, stockService, stockService, stockService);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/project_asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);

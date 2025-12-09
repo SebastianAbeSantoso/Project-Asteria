@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import project_asteria.Model.MacdResult;
 import project_asteria.Services.Bridge.GetEmaCalculator;
 import project_asteria.Services.Bridge.GetMacdCalculator;
+import project_asteria.Services.Bridge.GetRsiCalculator;
 import project_asteria.Services.Bridge.GetSmaCalculator;
 import project_asteria.Services.CSV.ImportCsv;
 import project_asteria.Services.AI.SendMessage;
@@ -23,6 +24,7 @@ public class TestingAIController {
     private GetSmaCalculator getSma;
     private GetEmaCalculator getEma;
     private GetMacdCalculator getMacd;
+    private GetRsiCalculator getRsi;
     private String AIresult;
 
     @FXML public TextField promptInput;
@@ -33,12 +35,13 @@ public class TestingAIController {
     @FXML public Button handleCalc;
     @FXML public TextField calcModeInput;
 
-    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd) {
+    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi) {
         this.sendMsg = sendMsg;
         this.importCsv = importCsv;
         this.getSma = getSma;
         this.getEma = getEma;
         this.getMacd = getMacd;
+        this.getRsi = getRsi;
     }
 
     @FXML
@@ -75,6 +78,9 @@ public class TestingAIController {
         } else if (calcModeInput.getText().equals("macd")) {
             MacdResult macdResult = getMacd.getMacd("BBCA", 12, 26,9);
             result.setText(macdResult.toString() + "\n");
+        } else if (calcModeInput.getText().equals("rsi")) {
+            double rsi10 = getRsi.getRsi("BBCA", 20);
+            result.setText("Rsi10 = " + rsi10 + "\n");
         }
         calcModeInput.clear();
     }

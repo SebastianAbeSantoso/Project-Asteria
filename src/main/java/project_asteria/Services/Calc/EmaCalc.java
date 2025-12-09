@@ -1,7 +1,6 @@
 package project_asteria.Services.Calc;
 
 import project_asteria.Model.PriceCandle;
-import project_asteria.Services.Bridge.GetSmaCalculator;
 
 import java.io.IOException;
 import java.sql.SQLException;
