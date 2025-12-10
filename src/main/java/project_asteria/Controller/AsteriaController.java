@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
 
-public class TestingAIController {
+public class AsteriaController {
     private String prompt;
     private SendMessage sendMsg;
     private ImportCsv importCsv;
@@ -34,7 +34,7 @@ public class TestingAIController {
     @FXML public Button handleCalc;
     @FXML public TextField calcModeInput;
 
-    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB) {
+    public AsteriaController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB) {
         this.sendMsg = sendMsg;
         this.importCsv = importCsv;
         this.getSma = getSma;
@@ -53,7 +53,6 @@ public class TestingAIController {
         System.out.println("prompt    = " + prompt);
         System.out.println("AIresult  = " + AIresult + "\n");
         result.setText(AIresult+ "\n");
-
     }
 
     @FXML
