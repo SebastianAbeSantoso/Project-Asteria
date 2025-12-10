@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface RsiCalc {
-    public double calculateRsi(List<PriceCandle> candles, int period) throws IOException;
+    double calculateRsi(List<PriceCandle> candles, int period) throws IOException;
 }

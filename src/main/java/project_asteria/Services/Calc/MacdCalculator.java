@@ -9,13 +9,13 @@ import java.util.List;
 public class MacdCalculator implements MacdCalc{
     private final double two = 2;
     private final double one = 1;
-    private final EmaCalcValue emaValue;
+    private final EmaCalc emaCalc;
     private double macdLine;
     private double signalLine;
     private double histogramLine;
 
-    public MacdCalculator(EmaCalcValue emaValue) {
-        this.emaValue = emaValue;
+    public MacdCalculator(EmaCalc emaValue) {
+        this.emaCalc = emaValue;
     }
 
     public MacdResult macdCalculator (List<PriceCandle> candles, int fastPeriod, int slowPeriod, int signalPeriod) {
@@ -26,8 +26,8 @@ public class MacdCalculator implements MacdCalc{
         List<Double> closePrices = new ArrayList<>();
         for (PriceCandle c : candles) closePrices.add(c.getClose());
 
-        List<Double> fastEma = emaValue.calculateEmaValue(closePrices, fastPeriod);
-        List<Double> slowEma = emaValue.calculateEmaValue(closePrices, slowPeriod);
+        List<Double> fastEma = emaCalc.calculateEmaValue(closePrices, fastPeriod);
+        List<Double> slowEma = emaCalc.calculateEmaValue(closePrices, slowPeriod);
 
         List<Double> macdLineHistory = new ArrayList<>();
         for (int i = 0; i < closePrices.size(); i++) {
@@ -36,7 +36,7 @@ public class MacdCalculator implements MacdCalc{
             macdLineHistory.add(fast - slow);
         }
 
-        List<Double> signalLineHistory = emaValue.calculateEmaValue(macdLineHistory, 9);
+        List<Double> signalLineHistory = emaCalc.calculateEmaValue(macdLineHistory, 9);
         int lastIndex = closePrices.size() - 1;
         macdLine = macdLineHistory.get(lastIndex);
         signalLine = signalLineHistory.get(lastIndex);

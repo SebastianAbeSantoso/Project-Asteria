@@ -7,5 +7,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface GetRsiCalculator {
-    public double getRsi(String symbol, int period) throws SQLException, IOException;
+    double getRsi(String symbol, int period) throws SQLException, IOException;
 }

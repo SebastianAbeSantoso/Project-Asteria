@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface MacdCalc {
-    public MacdResult macdCalculator (List<PriceCandle> candles, int fastPeriod, int slowPeriod, int signalPeriod) throws SQLException, IOException;
+    MacdResult macdCalculator (List<PriceCandle> candles, int fastPeriod, int slowPeriod, int signalPeriod) throws SQLException, IOException;
 }

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmaCalculator implements EmaCalc, EmaCalcValue {
+public class EmaCalculator implements EmaCalc {
     private final double two = 2.0;
     private final double one = 1.0;
 

@@ -6,5 +6,5 @@ import java.io.IOException;
 import java.util.List;
 
 public interface SmaCalc {
-    public double calculateSma(List<PriceCandle> candles, int period) throws IOException;
+    double calculateSma(List<PriceCandle> candles, int period) throws IOException;
 }

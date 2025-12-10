@@ -1,5 +1,6 @@
 package project_asteria.Services.Bridge;
 
+import project_asteria.Model.BollingerBandsResult;
 import project_asteria.Model.MacdResult;
 import project_asteria.Model.PriceCandle;
 import project_asteria.Repository.PriceHistoryRepository;
@@ -9,19 +10,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacdCalculator, GetRsiCalculator {
+public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacdCalculator, GetRsiCalculator, GetBollingerBandsCalculator {
     private final PriceHistoryRepository repository;
     private final SmaCalculator smaCalc;
     private final EmaCalculator emaCalc;
     private final MacdCalc macdCalc;
     private final RsiCalc rsiCalc;
+    private final BollingerBandsCalc bollingerBandsCalc;
 
-    public StockService(PriceHistoryRepository repository, SmaCalculator smaCalc, EmaCalculator emaCalc, MacdCalc macdCalc, RsiCalc rsiCalc) {
+    public StockService(PriceHistoryRepository repository, SmaCalculator smaCalc, EmaCalculator emaCalc, MacdCalc macdCalc, RsiCalc rsiCalc, BollingerBandsCalc bollingerBandsCalc) {
         this.repository = repository;
         this.smaCalc = smaCalc;
         this.emaCalc = emaCalc;
         this.macdCalc = macdCalc;
         this.rsiCalc = rsiCalc;
+        this.bollingerBandsCalc = bollingerBandsCalc;
     }
 
     public double getSma(String symbol, int period) throws SQLException {
@@ -42,5 +45,15 @@ public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacd
     public double getRsi(String symbol, int period) throws SQLException, IOException {
         List<PriceCandle> data = repository.loadCandles(symbol);
          return rsiCalc.calculateRsi(data, period);
+    }
+
+    public BollingerBandsResult getBollingerBands(String symbol) throws SQLException {
+        List<PriceCandle> data = repository.loadCandles(symbol);
+        return bollingerBandsCalc.calculateStandardBollingerBands(data);
+    }
+
+    public BollingerBandsResult getCustomBollingerBands(String symbol, int period, double stdDev) throws SQLException {
+        List<PriceCandle> data = repository.loadCandles(symbol);
+        return bollingerBandsCalc.calculateBollingerBands(data, period, stdDev);
     }
 }

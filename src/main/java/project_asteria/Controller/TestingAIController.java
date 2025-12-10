@@ -5,11 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import project_asteria.Model.BollingerBandsResult;
 import project_asteria.Model.MacdResult;
-import project_asteria.Services.Bridge.GetEmaCalculator;
-import project_asteria.Services.Bridge.GetMacdCalculator;
-import project_asteria.Services.Bridge.GetRsiCalculator;
-import project_asteria.Services.Bridge.GetSmaCalculator;
+import project_asteria.Services.Bridge.*;
 import project_asteria.Services.CSV.ImportCsv;
 import project_asteria.Services.AI.SendMessage;
 
@@ -25,6 +23,7 @@ public class TestingAIController {
     private GetEmaCalculator getEma;
     private GetMacdCalculator getMacd;
     private GetRsiCalculator getRsi;
+    private GetBollingerBandsCalculator getBB;
     private String AIresult;
 
     @FXML public TextField promptInput;
@@ -35,13 +34,14 @@ public class TestingAIController {
     @FXML public Button handleCalc;
     @FXML public TextField calcModeInput;
 
-    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi) {
+    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB) {
         this.sendMsg = sendMsg;
         this.importCsv = importCsv;
         this.getSma = getSma;
         this.getEma = getEma;
         this.getMacd = getMacd;
         this.getRsi = getRsi;
+        this.getBB = getBB;
     }
 
     @FXML
@@ -50,7 +50,7 @@ public class TestingAIController {
         AIresult = sendMsg.sendMessage(prompt);
         result.clear();
 
-        System.out.println("prompt    = " + prompt+ "\n");
+        System.out.println("prompt    = " + prompt);
         System.out.println("AIresult  = " + AIresult + "\n");
         result.setText(AIresult+ "\n");
 
@@ -68,20 +68,30 @@ public class TestingAIController {
 
     @FXML
     private void handleCalc (ActionEvent event) throws SQLException, IOException {
+        int period = 10;
+        String symbol = "BBCA";
+        double stdDev = 2.0;
         calcModeInput.getText();
         if (calcModeInput.getText().equals("sma")) {
-            double sma10 =  getSma.getSma("BBCA", 10);
+            double sma10 =  getSma.getSma(symbol, period);
             result.setText("Sma10 = " + sma10 + "\n");
         } else if (calcModeInput.getText().equals("ema")) {
-            double ema10 = getEma.getEma("BBCA", 10);
+            double ema10 = getEma.getEma(symbol, period);
             result.setText("Ema10 = " + ema10 + "\n");
         } else if (calcModeInput.getText().equals("macd")) {
-            MacdResult macdResult = getMacd.getMacd("BBCA", 12, 26,9);
+            MacdResult macdResult = getMacd.getMacd(symbol, 12, 26,9);
             result.setText(macdResult.toString() + "\n");
         } else if (calcModeInput.getText().equals("rsi")) {
-            double rsi10 = getRsi.getRsi("BBCA", 20);
+            double rsi10 = getRsi.getRsi(symbol, period);
             result.setText("Rsi10 = " + rsi10 + "\n");
+        } else if (calcModeInput.getText().equals("bb")) {
+            BollingerBandsResult BB = getBB.getBollingerBands(symbol);
+            result.setText(BB + "\n");
+        } else if (calcModeInput.getText().equals("bbc")) {
+            BollingerBandsResult customBB = getBB.getCustomBollingerBands(symbol, period, stdDev);
+            result.setText(customBB + "\n");
         }
+
         calcModeInput.clear();
     }
 }

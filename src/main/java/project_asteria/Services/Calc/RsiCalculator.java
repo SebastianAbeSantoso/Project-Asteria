@@ -6,6 +6,20 @@ import java.util.List;
 
 public class RsiCalculator implements RsiCalc {
 
+    public enum RsiState {
+        OVERSOLD,
+        NEUTRAL,
+        OVERBOUGHT
+    }
+
+    public RsiState classifyRsi(double rsi) {
+        if (Double.isNaN(rsi)) return RsiState.NEUTRAL;
+
+        if (rsi < 30.0) return RsiState.OVERSOLD;
+        if (rsi > 70.0) return RsiState.OVERBOUGHT;
+        return RsiState.NEUTRAL;
+    }
+
     public double calculateRsi (List<PriceCandle> candles, int period){
         if (candles == null || candles.size() <= period || period <= 0) {
             return Double.NaN;
