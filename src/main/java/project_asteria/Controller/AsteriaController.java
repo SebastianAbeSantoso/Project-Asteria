@@ -14,8 +14,9 @@ import project_asteria.Services.AI.SendMessage;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.SQLException;
+import java.util.List;
 
-public class TestingAIController {
+public class AsteriaController {
     private String prompt;
     private SendMessage sendMsg;
     private ImportCsv importCsv;
@@ -24,6 +25,7 @@ public class TestingAIController {
     private GetMacdCalculator getMacd;
     private GetRsiCalculator getRsi;
     private GetBollingerBandsCalculator getBB;
+    private GetAtrCalculator getAtr;
     private String AIresult;
 
     @FXML public TextField promptInput;
@@ -34,7 +36,7 @@ public class TestingAIController {
     @FXML public Button handleCalc;
     @FXML public TextField calcModeInput;
 
-    public TestingAIController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB) {
+    public AsteriaController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB, GetAtrCalculator getAtr) {
         this.sendMsg = sendMsg;
         this.importCsv = importCsv;
         this.getSma = getSma;
@@ -42,6 +44,7 @@ public class TestingAIController {
         this.getMacd = getMacd;
         this.getRsi = getRsi;
         this.getBB = getBB;
+        this.getAtr = getAtr;
     }
 
     @FXML
@@ -90,6 +93,9 @@ public class TestingAIController {
         } else if (calcModeInput.getText().equals("bbc")) {
             BollingerBandsResult customBB = getBB.getCustomBollingerBands(symbol, period, stdDev);
             result.setText(customBB + "\n");
+        } else if (calcModeInput.getText().equals("atr")) {
+            List<Double> atr = getAtr.calculateATR(symbol, period);
+            result.setText(atr + "\n");
         }
 
         calcModeInput.clear();

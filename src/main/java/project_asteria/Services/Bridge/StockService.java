@@ -8,23 +8,26 @@ import project_asteria.Services.Calc.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacdCalculator, GetRsiCalculator, GetBollingerBandsCalculator {
+public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacdCalculator, GetRsiCalculator, GetBollingerBandsCalculator, GetAtrCalculator {
     private final PriceHistoryRepository repository;
     private final SmaCalculator smaCalc;
     private final EmaCalculator emaCalc;
     private final MacdCalc macdCalc;
     private final RsiCalc rsiCalc;
     private final BollingerBandsCalc bollingerBandsCalc;
+    private final AtrCalculator atrCalc;
 
-    public StockService(PriceHistoryRepository repository, SmaCalculator smaCalc, EmaCalculator emaCalc, MacdCalc macdCalc, RsiCalc rsiCalc, BollingerBandsCalc bollingerBandsCalc) {
+    public StockService(PriceHistoryRepository repository, SmaCalculator smaCalc, EmaCalculator emaCalc, MacdCalc macdCalc, RsiCalc rsiCalc, BollingerBandsCalc bollingerBandsCalc, AtrCalculator atrCalc) {
         this.repository = repository;
         this.smaCalc = smaCalc;
         this.emaCalc = emaCalc;
         this.macdCalc = macdCalc;
         this.rsiCalc = rsiCalc;
         this.bollingerBandsCalc = bollingerBandsCalc;
+        this.atrCalc = atrCalc;
     }
 
     public double getSma(String symbol, int period) throws SQLException {
@@ -55,5 +58,10 @@ public class StockService implements GetSmaCalculator, GetEmaCalculator, GetMacd
     public BollingerBandsResult getCustomBollingerBands(String symbol, int period, double stdDev) throws SQLException {
         List<PriceCandle> data = repository.loadCandles(symbol);
         return bollingerBandsCalc.calculateBollingerBands(data, period, stdDev);
+    }
+
+    public List<Double> calculateATR(String symbol, int period) throws SQLException {
+        List<PriceCandle> data = repository.loadCandles(symbol);
+        return atrCalc.calculateATR(data, period);
     }
 }

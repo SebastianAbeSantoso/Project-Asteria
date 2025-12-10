@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import project_asteria.Controller.TestingAIController;
+import project_asteria.Controller.AsteriaController;
 import project_asteria.Database.DatabaseManager;
 import project_asteria.Repository.PriceHistoryRepository;
 import project_asteria.Services.AI.AzureOpenAI;
@@ -33,10 +33,11 @@ public class AsteriaApplication extends Application {
         MacdCalculator macdCalculator = new MacdCalculator(emaCalculator);
         RsiCalculator rsiCalculator = new RsiCalculator();
         BollingerBandsCalculator bollingerCalculator = new BollingerBandsCalculator();
+        AtrCalculator atrCalculator = new AtrCalculator();
 
-        StockService stockService = new StockService(repository, smaCalculator, emaCalculator, macdCalculator, rsiCalculator, bollingerCalculator);
+        StockService stockService = new StockService(repository, smaCalculator, emaCalculator, macdCalculator, rsiCalculator, bollingerCalculator, atrCalculator);
 
-        TestingAIController controller = new TestingAIController(ai, csvImporter, stockService, stockService, stockService, stockService, stockService);
+        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, stockService, stockService, stockService, stockService, stockService);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/project_asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
