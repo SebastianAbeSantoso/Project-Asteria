@@ -38,7 +38,7 @@ public class AsteriaApplication extends Application {
         StockService stockService = new StockService(repository, smaCalculator, emaCalculator, macdCalculator, rsiCalculator, bollingerCalculator, atrCalculator);
 
         AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, stockService, stockService, stockService, stockService, stockService);
-        FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/project_asteria/testing-ui.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/project_asteria/asteria-login.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
 

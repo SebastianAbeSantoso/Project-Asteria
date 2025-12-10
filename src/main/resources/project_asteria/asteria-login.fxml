@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" stylesheets="project_asteria/styles.css" prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Pane prefHeight="200" prefWidth="200" styleClass="logo"/>
+
+    <Label id="inputNameText" fx:id="inputNameText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
+        <VBox.margin>
+            <Insets top="-20"/>
+            <Insets bottom="10" />
+        </VBox.margin>XPresso
+    </Label>
+
+    <Label id="inputDetailText" fx:id="inputDetailText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
+        <VBox.margin>
+            <Insets bottom="30"/>
+        </VBox.margin>Cafe Management System
+    </Label>
+
+    <VBox alignment="CENTER" maxWidth="500.0" prefHeight="600" styleClass="signup-vbox" spacing="20">
+
+        <Label id="staffAccountText" fx:id="staffAccountText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
+            Staff Account Data Input
+        </Label>
+
+        <Label fx:id="userNameText" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="0.0" styleClass="input-label">
+            <VBox.margin>
+                <Insets bottom="-10" />
+            </VBox.margin>Username
+        </Label>
+
+        <TextField fx:id="UserNameInput" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="42.0" styleClass="input-field">
+        </TextField>
+
+        <Label fx:id="UserPasswordText" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="18.0" styleClass="input-label">
+            <VBox.margin>
+                <Insets bottom="-10" />
+            </VBox.margin>Password
+        </Label>
+
+        <PasswordField fx:id="UserPasswordInput" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="42.0" prefWidth="246.0" styleClass="input-field">
+        </PasswordField>
+
+        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="420" prefHeight="40.0" styleClass="create-update-button" text="Login"/>
+    </VBox>
+
+   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1648.0">
+       <VBox fx:id="staffListContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1648.0" visible="false" managed="false" spacing="5">
+           <VBox.margin>
+               <Insets top="20"/>
+           </VBox.margin>
+
+           <Label styleClass="input-label" text="--- Staff Data ---">
+               <VBox.margin>
+                   <Insets bottom="10"/>
+               </VBox.margin>
+           </Label>
+       </VBox>
+   </VBox>
+</VBox>

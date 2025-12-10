@@ -1,0 +1,142 @@
+.root {
+    -fx-background-color: #1a1625;
+    -fx-font-family: "Segoe UI";
+    -fx-background-image: url('images/Background.png');
+
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.logo {
+    -fx-background-image: url('images/Logo.png');
+    -fx-max-height: 200px;
+    -fx-max-width: 200px;
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+#inputNameText {
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 40px;
+}
+
+#inputDetailText {
+    -fx-text-fill: #B7ABA2;
+    -fx-font-size: 14px;
+    -fx-font-weight: 300;
+
+}
+
+#staffAccountText {
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 20px;
+    -fx-font-weight: 600;
+}
+
+#createAddText {
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 14px;
+    -fx-font-weight: 300;
+    -fx-underline: true;
+}
+
+#createAddText:hover {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 300;
+    -fx-underline: true;
+}
+
+.signup-vbox {
+    -fx-background-image: url('images/Background.png');
+    -fx-background-color: #BB86FC;
+    -fx-background-radius: 30;
+    -fx-background-repeat: stretch;
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+.input-label {
+    -fx-font-weight: 300;
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 14pt;
+}
+
+.input-field {
+    -fx-padding: 8px;
+    -fx-font-size: 15pt;
+    -fx-text-fill: #121212;
+    -fx-background-radius: 10;
+    -fx-alignment: CENTER_LEFT;
+
+    -fx-border-color: #cccccc;
+    -fx-background-color: #737373;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10;
+}
+
+.create-update-button {
+    -fx-font-size: 16pt;
+    -fx-background-color: #1F1B17;
+    -fx-border-color: #C69C59;
+    -fx-border-radius: 5;
+    -fx-text-fill: #cccccc;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5;
+    -fx-font-weight: 300;
+}
+
+.create-update-button:hover {
+    -fx-background-color: #C69C59;
+}
+
+.create-update-button:pressed {
+    -fx-background-color: #cccccc;
+}
+
+.staff-list {
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 14px;
+    -fx-font-weight: 300;
+    -fx-background-color: #1F1B17;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+
+}
+
+.list-view.staff-list .list-cell {
+    -fx-text-fill: #F5EBDD;
+    -fx-font-size: 14px;
+    -fx-font-weight: 300;
+    -fx-padding: 5;
+
+    -fx-border-radius: 5px;
+    -fx-background-color: #1F1B17;
+    -fx-control-inner-background: transparent;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('/fonts/Segoe/segoeui.ttf');
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('/fonts/Segoe/segoeuib.ttf');
+    -fx-font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('/fonts/Segoe/segoeuisl.ttf');
+    -fx-font-weight: 300;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('/fonts/Segoe/seguisb.ttf');
+    -fx-font-weight: 600;
+}
