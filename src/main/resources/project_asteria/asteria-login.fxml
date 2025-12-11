@@ -4,61 +4,80 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" stylesheets="project_asteria/styles.css" prefHeight="1080" prefWidth="1920" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="1080" prefWidth="1920" stylesheets="project_asteria/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
-    <Pane prefHeight="200" prefWidth="200" styleClass="logo"/>
-
-    <Label id="inputNameText" fx:id="inputNameText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
+    <Pane id="appLogo" prefHeight="300" prefWidth="300">
         <VBox.margin>
-            <Insets top="-20"/>
+            <Insets top="-40" />
+        </VBox.margin>
+    </Pane>
+
+    <Label id="appTitle" alignment="TOP_CENTER" maxWidth="420" prefHeight="0.0">
+        <VBox.margin>
+            <Insets top="-100" />
             <Insets bottom="10" />
-        </VBox.margin>XPresso
+        </VBox.margin>Asteria
     </Label>
 
-    <Label id="inputDetailText" fx:id="inputDetailText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
+    <Label alignment="CENTER" maxWidth="420" prefHeight="0.0" styleClass="detail-text">
         <VBox.margin>
-            <Insets bottom="30"/>
-        </VBox.margin>Cafe Management System
+            <Insets bottom="30" />
+        </VBox.margin>Enter the realm of mystical insights
     </Label>
 
-    <VBox alignment="CENTER" maxWidth="500.0" prefHeight="600" styleClass="signup-vbox" spacing="20">
+    <VBox id="loginCard" alignment="TOP_CENTER" maxWidth="450" prefHeight="600" spacing="20">
 
-        <Label id="staffAccountText" fx:id="staffAccountText" alignment="CENTER" maxWidth="420" prefHeight="0.0">
-            Staff Account Data Input
+        <Label id="welcomeTitle" alignment="CENTER" maxWidth="400" prefHeight="0.0">
+            <VBox.margin>
+                <Insets top="30" />
+            </VBox.margin>
+            Welcome Back
         </Label>
 
-        <Label fx:id="userNameText" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="0.0" styleClass="input-label">
+        <Label alignment="CENTER" maxWidth="400" prefHeight="0.0" styleClass="detail-text">
+            <VBox.margin>
+                <Insets top="-20" />
+            </VBox.margin>The stars have foretold your arrival
+        </Label>
+
+        <Label alignment="BASELINE_LEFT" maxWidth="400" prefHeight="0.0" styleClass="input-label">
             <VBox.margin>
                 <Insets bottom="-10" />
             </VBox.margin>Username
         </Label>
 
-        <TextField fx:id="UserNameInput" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="42.0" styleClass="input-field">
-        </TextField>
+        <TextField fx:id="UserNameInput" alignment="BASELINE_LEFT" maxWidth="400" prefHeight="42.0" styleClass="input-field" />
 
-        <Label fx:id="UserPasswordText" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="18.0" styleClass="input-label">
+        <Label alignment="BASELINE_LEFT" maxWidth="400" prefHeight="18.0" styleClass="input-label">
             <VBox.margin>
                 <Insets bottom="-10" />
             </VBox.margin>Password
         </Label>
 
-        <PasswordField fx:id="UserPasswordInput" alignment="BASELINE_LEFT" maxWidth="420" prefHeight="42.0" prefWidth="246.0" styleClass="input-field">
-        </PasswordField>
+        <PasswordField fx:id="UserPasswordInput" alignment="BASELINE_LEFT" maxWidth="400" prefHeight="42.0" prefWidth="246.0" styleClass="input-field" />
 
-        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="420" prefHeight="40.0" styleClass="create-update-button" text="Login"/>
+        <HBox alignment="CENTER" maxWidth="400" prefHeight="10">
+            <CheckBox mnemonicParsing="false" text="Remember me" styleClass="input-label" />
+
+            <Pane HBox.hgrow="ALWAYS" styleClass="spacer"/>
+
+            <Label text="Forgot password?" styleClass="text-link"/>
+        </HBox>
+
+        <Button fx:id="createButton" alignment="CENTER" contentDisplay="CENTER" maxWidth="400" prefHeight="40.0" styleClass="action-button" text="Login" />
     </VBox>
 
-   <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1648.0">
-       <VBox fx:id="staffListContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1648.0" visible="false" managed="false" spacing="5">
-           <VBox.margin>
-               <Insets top="20"/>
-           </VBox.margin>
+    <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1648.0">
+        <VBox alignment="TOP_CENTER" managed="false" prefHeight="200.0" prefWidth="1648.0" spacing="5" visible="false">
+            <VBox.margin>
+                <Insets top="20" />
+            </VBox.margin>
 
-           <Label styleClass="input-label" text="--- Staff Data ---">
-               <VBox.margin>
-                   <Insets bottom="10"/>
-               </VBox.margin>
-           </Label>
-       </VBox>
-   </VBox>
+            <Label styleClass="input-label" text="--- Staff Data ---">
+                <VBox.margin>
+                    <Insets bottom="10" />
+                </VBox.margin>
+            </Label>
+        </VBox>
+    </VBox>
 </VBox>
