@@ -9,7 +9,7 @@ import project_asteria.Model.BollingerBandsResult;
 import project_asteria.Model.MacdResult;
 import project_asteria.Services.Bridge.*;
 import project_asteria.Services.CSV.ImportCsv;
-import project_asteria.Services.AI.SendMessage;
+import project_asteria.Services.AI.ISendMessage;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -18,14 +18,10 @@ import java.util.List;
 
 public class AsteriaController {
     private String prompt;
-    private SendMessage sendMsg;
+    private ISendMessage sendMsg;
     private ImportCsv importCsv;
-    private GetSmaCalculator getSma;
-    private GetEmaCalculator getEma;
-    private GetMacdCalculator getMacd;
-    private GetRsiCalculator getRsi;
-    private GetBollingerBandsCalculator getBB;
-    private GetAtrCalculator getAtr;
+
+    private IStockCalculationSuite iStockCalculationSuite;
     private String AIresult;
 
     @FXML public TextField promptInput;
@@ -36,15 +32,10 @@ public class AsteriaController {
     @FXML public Button handleCalc;
     @FXML public TextField calcModeInput;
 
-    public AsteriaController(SendMessage sendMsg, ImportCsv importCsv, GetSmaCalculator getSma, GetEmaCalculator getEma, GetMacdCalculator getMacd, GetRsiCalculator getRsi, GetBollingerBandsCalculator getBB, GetAtrCalculator getAtr) {
+    public AsteriaController(ISendMessage sendMsg, ImportCsv importCsv, IStockCalculationSuite istockCalculationSuite) {
         this.sendMsg = sendMsg;
         this.importCsv = importCsv;
-        this.getSma = getSma;
-        this.getEma = getEma;
-        this.getMacd = getMacd;
-        this.getRsi = getRsi;
-        this.getBB = getBB;
-        this.getAtr = getAtr;
+        this.iStockCalculationSuite = istockCalculationSuite;
     }
 
     @FXML
@@ -76,25 +67,25 @@ public class AsteriaController {
         double stdDev = 2.0;
         calcModeInput.getText();
         if (calcModeInput.getText().equals("sma")) {
-            double sma10 =  getSma.getSma(symbol, period);
+            double sma10 = iStockCalculationSuite.getSma(symbol, period);
             result.setText("Sma10 = " + sma10 + "\n");
         } else if (calcModeInput.getText().equals("ema")) {
-            double ema10 = getEma.getEma(symbol, period);
+            double ema10 = iStockCalculationSuite.getEma(symbol, period);
             result.setText("Ema10 = " + ema10 + "\n");
         } else if (calcModeInput.getText().equals("macd")) {
-            MacdResult macdResult = getMacd.getMacd(symbol, 12, 26,9);
+            MacdResult macdResult = iStockCalculationSuite.getMacd(symbol, 12, 26,9);
             result.setText(macdResult.toString() + "\n");
         } else if (calcModeInput.getText().equals("rsi")) {
-            double rsi10 = getRsi.getRsi(symbol, period);
+            double rsi10 = iStockCalculationSuite.getRsi(symbol, period);
             result.setText("Rsi10 = " + rsi10 + "\n");
         } else if (calcModeInput.getText().equals("bb")) {
-            BollingerBandsResult BB = getBB.getBollingerBands(symbol);
+            BollingerBandsResult BB = iStockCalculationSuite.getBollingerBands(symbol);
             result.setText(BB + "\n");
         } else if (calcModeInput.getText().equals("bbc")) {
-            BollingerBandsResult customBB = getBB.getCustomBollingerBands(symbol, period, stdDev);
+            BollingerBandsResult customBB = iStockCalculationSuite.getCustomBollingerBands(symbol, period, stdDev);
             result.setText(customBB + "\n");
         } else if (calcModeInput.getText().equals("atr")) {
-            List<Double> atr = getAtr.calculateATR(symbol, period);
+            List<Double> atr = iStockCalculationSuite.calculateATR(symbol, period);
             result.setText(atr + "\n");
         }
 

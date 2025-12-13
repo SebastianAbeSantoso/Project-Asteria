@@ -11,7 +11,7 @@ import com.microsoft.semantickernel.services.chatcompletion.ChatMessageContent;
 
 import java.util.List;
 
-public class AzureOpenAI implements SendMessage {
+public class AzureOpenAI implements ISendMessage {
     private final OpenAIAsyncClient client;
     private final ChatCompletionService chatService;
     private final Kernel kernel;

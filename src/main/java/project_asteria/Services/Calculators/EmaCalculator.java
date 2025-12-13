@@ -1,4 +1,4 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.PriceCandle;
 
@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmaCalculator implements EmaCalc {
+public class EmaCalculator implements IEmaCalculator {
     private final double two = 2.0;
     private final double one = 1.0;
 

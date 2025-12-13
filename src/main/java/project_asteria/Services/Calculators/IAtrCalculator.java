@@ -1,9 +1,9 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.PriceCandle;
 
 import java.util.List;
 
-public interface AtrCalc {
+public interface IAtrCalculator {
     List<Double> calculateATR(List<PriceCandle> candles, int period);
 }

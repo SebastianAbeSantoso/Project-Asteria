@@ -1,11 +1,11 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.BollingerBandsResult;
 import project_asteria.Model.PriceCandle;
 
 import java.util.List;
 
-public class BollingerBandsCalculator implements BollingerBandsCalc {
+public class BollingerBandsCalculator implements IBollingerBandsCalculator {
 
     public BollingerBandsResult calculateBollingerBands (List<PriceCandle> candles, int period, double numStdDev){
         if (candles == null || candles.size() < period){

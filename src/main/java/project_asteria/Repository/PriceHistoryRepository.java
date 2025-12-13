@@ -1,6 +1,7 @@
 package project_asteria.Repository;
 
 import project_asteria.Database.DatabaseManager;
+import project_asteria.Database.IConnectionFactory;
 import project_asteria.Model.PriceCandle;
 
 import java.sql.Connection;
@@ -11,7 +12,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PriceHistoryRepository implements LoadCandles {
+public class PriceHistoryRepository implements ISqliteLoadCandles {
+
+    private final IConnectionFactory db;
+
+    public PriceHistoryRepository(IConnectionFactory db) {
+        this.db = db;
+    }
 
     public void saveCandles(String symbol, List<PriceCandle> price_history) throws SQLException {
         String deleteSQL = "DELETE FROM price_history WHERE symbol = ?";
@@ -19,7 +26,7 @@ public class PriceHistoryRepository implements LoadCandles {
                 "(symbol, date, open, high, low, close, volume)" +
                 "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
-        try (Connection conn = DatabaseManager.getConnection();) {
+        try (Connection conn = db.getConnection();) {
             conn.setAutoCommit(false);
 
             try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSQL);
@@ -60,8 +67,8 @@ public class PriceHistoryRepository implements LoadCandles {
 
         List<PriceCandle> result = new ArrayList<>();
 
-        try (Connection conn = DatabaseManager.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = db.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, symbol);
 

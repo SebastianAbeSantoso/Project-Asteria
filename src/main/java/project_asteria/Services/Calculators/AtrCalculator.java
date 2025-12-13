@@ -1,11 +1,11 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.PriceCandle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AtrCalculator implements AtrCalc {
+public class AtrCalculator implements IAtrCalculator {
 
     public List<Double> calculateATR(List<PriceCandle> candles, int period){
         List<Double> atrValues = new ArrayList<>();

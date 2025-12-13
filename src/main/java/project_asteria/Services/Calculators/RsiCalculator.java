@@ -1,10 +1,10 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.PriceCandle;
 
 import java.util.List;
 
-public class RsiCalculator implements RsiCalc {
+public class RsiCalculator implements IRsiCalculator {
 
     public enum RsiState {
         OVERSOLD,

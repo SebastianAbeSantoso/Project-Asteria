@@ -1,34 +1,30 @@
 package project_asteria.Database;
 
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.sql.*;
 
 public class DatabaseManager {
-    private static final String DB_FILE_PATH = "data/asteria.db";
-    private static final String DB_URL = "jdbc:sqlite:" + DB_FILE_PATH;
+    private final IConnectionFactory dbFactory;
 
-    private static Connection connection;
+    public DatabaseManager(IConnectionFactory dbFactory) {
+        this.dbFactory = dbFactory;
+    }
 
-    private static void validateDataFolder() throws Exception {
+
+    private void validateDataFolder() throws Exception {
         Path dataDir = Paths.get("data");
         if (!Files.exists(dataDir)) {
             Files.createDirectories(dataDir);
         }
     }
 
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(DB_URL);
-        }
-        return connection;
-    }
-
-    public static void initializeDatabase() throws Exception {
+    public void initializeDatabase() throws Exception {
         validateDataFolder();
 
-        try (Connection conn = getConnection()){
+        try (Connection conn = dbFactory.getConnection()) {
             Statement stmt = conn.createStatement();
 
             String createUsersTable = """
@@ -84,4 +80,5 @@ public class DatabaseManager {
             stmt.execute(createInsightLogsTable);
         }
     }
+
 }

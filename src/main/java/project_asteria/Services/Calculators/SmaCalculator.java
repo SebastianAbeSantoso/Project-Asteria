@@ -1,10 +1,10 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.PriceCandle;
 
 import java.util.List;
 
-public class SmaCalculator implements SmaCalc {
+public class SmaCalculator implements ISmaCalculator {
 
     public double calculateSma (List<PriceCandle> candles, int period){
         if (candles == null || candles.size() < period) {

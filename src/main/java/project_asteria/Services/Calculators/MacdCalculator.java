@@ -1,4 +1,4 @@
-package project_asteria.Services.Calc;
+package project_asteria.Services.Calculators;
 
 import project_asteria.Model.MacdResult;
 import project_asteria.Model.PriceCandle;
@@ -6,15 +6,15 @@ import project_asteria.Model.PriceCandle;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MacdCalculator implements MacdCalc{
+public class MacdCalculator implements IMacdCalculator {
     private final double two = 2;
     private final double one = 1;
-    private final EmaCalc emaCalc;
+    private final IEmaCalculator emaCalc;
     private double macdLine;
     private double signalLine;
     private double histogramLine;
 
-    public MacdCalculator(EmaCalc emaValue) {
+    public MacdCalculator(IEmaCalculator emaValue) {
         this.emaCalc = emaValue;
     }
 

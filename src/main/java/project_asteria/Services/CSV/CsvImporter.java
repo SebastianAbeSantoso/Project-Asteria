@@ -14,7 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CsvImporter implements ImportCsv {
-    private final PriceHistoryRepository priceRepo = new PriceHistoryRepository();
+    private final PriceHistoryRepository priceRepo;
+
+    public CsvImporter(PriceHistoryRepository priceRepo) {
+        this.priceRepo = priceRepo;
+    }
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
