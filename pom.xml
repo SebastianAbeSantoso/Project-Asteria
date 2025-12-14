@@ -106,7 +106,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>project_asteria.View.Application.AsteriaApplication
+                            <mainClass>asteria.view.application.AsteriaApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
