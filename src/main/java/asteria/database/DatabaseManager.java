@@ -56,6 +56,7 @@ public class DatabaseManager {
                     high REAL,
                     low REAL,
                     close REAL,
+                    adjustedClose REAL,
                     volume REAL
                     );
                     """;

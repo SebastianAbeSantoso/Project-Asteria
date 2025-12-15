@@ -1,6 +1,7 @@
 package asteria.services.application;
 
 import asteria.services.ai.ChatHistoryManager;
+import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,8 @@ import asteria.services.calculators.momentum.StochasticCalculatorImpl;
 import asteria.services.dataimport.csv.YahooCsvImporterImpl;
 import asteria.services.bridge.StockService;
 
+import java.nio.file.Path;
+
 public class AsteriaApplication extends Application {
 
     @Override
@@ -28,6 +31,7 @@ public class AsteriaApplication extends Application {
         SqliteConnectionFactory sqliteConnectionFactory = new SqliteConnectionFactory();
         DatabaseManager databaseManager = new DatabaseManager(sqliteConnectionFactory);
         databaseManager.initializeDatabase();
+        YahooFinanceDownloaderImpl yahooFinanceDownloader = new YahooFinanceDownloaderImpl(Path.of("bin/YahooFinanceDownloader.exe"));
 
         PriceHistoryRepository repository = new PriceHistoryRepository(sqliteConnectionFactory);
         YahooCsvImporterImpl csvImporter = new YahooCsvImporterImpl(repository);
@@ -46,7 +50,7 @@ public class AsteriaApplication extends Application {
         AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager);;
 
 
-        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService);
+        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, yahooFinanceDownloader);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);

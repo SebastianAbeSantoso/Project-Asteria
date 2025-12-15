@@ -1,6 +1,8 @@
 package asteria.controller;
 
 
+import asteria.services.dataimport.api.YahooFinanceDownloader;
+import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -21,6 +23,7 @@ public class AsteriaController {
     private String prompt;
     private MessageSender messageSender;
     private YahooCsvImporter importCsv;
+    private YahooFinanceDownloader yahooFinanceDownloader;
 
     private StockCalculationSuite stockCalculationSuite;
     private String AIresult;
@@ -40,17 +43,18 @@ public class AsteriaController {
     @FXML
     public TextField calcModeInput;
 
-    public AsteriaController(MessageSender messageSender, YahooCsvImporter importCsv, StockCalculationSuite stockCalculationSuite) {
+    public AsteriaController(MessageSender messageSender, YahooCsvImporter importCsv, StockCalculationSuite stockCalculationSuite, YahooFinanceDownloader yahooFinanceDownloader) {
         this.messageSender = messageSender;
         this.importCsv = importCsv;
         this.stockCalculationSuite = stockCalculationSuite;
+        this.yahooFinanceDownloader = yahooFinanceDownloader;
     }
 
     @FXML
     private void handleInput(ActionEvent event) throws SQLException, IOException {
         String prompt = promptInput.getText();
-        String symbol = "BBCA";
-        if (calcModeInput.getText().equals("data")) prompt = prompt + stockCalculationSuite.getFullAnalysis(symbol);
+        String symbol = "BBCA.JK";
+        if (calcModeInput.getText().equals("data")) prompt = prompt + "\n" + stockCalculationSuite.getFullAnalysis(symbol);
 
         AIresult = messageSender.sendMessage(prompt);
         result.clear();
@@ -62,7 +66,9 @@ public class AsteriaController {
     @FXML
     private void handleImport(ActionEvent event) {
         try {
-            importCsv.importPriceCsv("BBCA", Path.of("data/import/BBCA.csv"));
+            String symbol = calcModeInput.getText();
+
+            importCsv.importPriceCsv(symbol, Path.of("data/import/" + symbol + ".csv"));
             System.out.println("Import successful.");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
@@ -70,8 +76,10 @@ public class AsteriaController {
     }
 
     @FXML
-    private void handleDownload(ActionEvent event) {
+    private void handleDownload(ActionEvent event) throws IOException, InterruptedException {
         String symbol = calcModeInput.getText();
+
+        yahooFinanceDownloader.download(symbol, Path.of("data/import/" + symbol + ".CSV"));
 
         System.out.println("Downloading: " + symbol);
     }

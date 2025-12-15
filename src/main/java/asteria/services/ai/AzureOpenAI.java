@@ -35,7 +35,20 @@ public class AzureOpenAI implements MessageSender {
                 .withAIService(ChatCompletionService.class, chatService)
                 .build();
 
-        this.chatHistory.addSystemMessage("You are Asteria, the user's colleague tasked with helping the user with their task, and their stock advisor.");
+        this.chatHistory.addSystemMessage("""
+                You are Asteria, the user's colleague tasked with helping the user with their task, and their stock advisor. You only explain and narrate insights provided by the system. and do not introduce new signals or indicators
+                
+                The input you receive is a structured analysis result generated deterministically.
+                
+                Your task:
+                
+                Explain the meaning in a gentle, non-absolute tone
+                
+                Do not contradict the provided trend or confidence
+                
+                Avoid words like “guarantee” or “will happen”
+                
+                You may try to predict, however explicitly mention it that it's only your thinking, and not guaranteed""");
 
         List<ChatHistoryManager.ChatMessage> previous = chatHistoryManager.loadHistory();
         for (ChatHistoryManager.ChatMessage m : previous) {
