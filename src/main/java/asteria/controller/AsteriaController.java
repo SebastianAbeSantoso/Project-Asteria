@@ -9,7 +9,7 @@ import asteria.model.BollingerBandsResult;
 import asteria.model.MacdResult;
 import asteria.model.StochasticResult;
 import asteria.services.bridge.*;
-import asteria.services.dataimport.csv.CsvImporter;
+import asteria.services.dataimport.csv.YahooCsvImporter;
 import asteria.services.ai.MessageSender;
 
 import java.io.IOException;
@@ -20,20 +20,27 @@ import java.util.List;
 public class AsteriaController {
     private String prompt;
     private MessageSender messageSender;
-    private CsvImporter importCsv;
+    private YahooCsvImporter importCsv;
 
     private StockCalculationSuite stockCalculationSuite;
     private String AIresult;
 
-    @FXML public TextField promptInput;
-    @FXML public TextArea result;
-    @FXML public TextArea resultCalc;
-    @FXML public Button inputButton;
-    @FXML public Button ImportButton;
-    @FXML public Button handleCalc;
-    @FXML public TextField calcModeInput;
+    @FXML
+    public TextField promptInput;
+    @FXML
+    public TextArea result;
+    @FXML
+    public TextArea resultCalc;
+    @FXML
+    public Button inputButton;
+    @FXML
+    public Button ImportButton;
+    @FXML
+    public Button handleCalc;
+    @FXML
+    public TextField calcModeInput;
 
-    public AsteriaController(MessageSender messageSender, CsvImporter importCsv, StockCalculationSuite stockCalculationSuite) {
+    public AsteriaController(MessageSender messageSender, YahooCsvImporter importCsv, StockCalculationSuite stockCalculationSuite) {
         this.messageSender = messageSender;
         this.importCsv = importCsv;
         this.stockCalculationSuite = stockCalculationSuite;
@@ -48,18 +55,25 @@ public class AsteriaController {
         AIresult = messageSender.sendMessage(prompt);
         result.clear();
 
-        result.setText(AIresult+ "\n");
+        result.setText(AIresult + "\n");
 
     }
 
     @FXML
-    private void handleImport (ActionEvent event) {
+    private void handleImport(ActionEvent event) {
         try {
             importCsv.importPriceCsv("BBCA", Path.of("data/import/BBCA.csv"));
             System.out.println("Import successful.");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleDownload(ActionEvent event) {
+        String symbol = calcModeInput.getText();
+
+        System.out.println("Downloading: " + symbol);
     }
 
     @FXML

@@ -13,10 +13,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvImporterImpl implements CsvImporter {
+public class YahooCsvImporterImpl implements YahooCsvImporter {
     private final PriceHistoryRepository priceRepo;
 
-    public CsvImporterImpl(PriceHistoryRepository priceRepo) {
+    public YahooCsvImporterImpl(PriceHistoryRepository priceRepo) {
         this.priceRepo = priceRepo;
     }
 
@@ -37,13 +37,14 @@ public class CsvImporterImpl implements CsvImporter {
                 String[] parts = line.split(",");
 
                 LocalDate date = LocalDate.parse(parts[0], dateFormatter);
-                double open = Double.parseDouble(parts[5]);
-                double high = Double.parseDouble(parts[3]);
-                double low = Double.parseDouble(parts[4]);
-                double close = Double.parseDouble(parts[2]);
-                double volume = parts.length > 6 ? Double.parseDouble(parts[6]) : 0.0;
+                double open  = Double.parseDouble(parts[6]);
+                double high  = Double.parseDouble(parts[4]);
+                double low   = Double.parseDouble(parts[5]);
+                double close = Double.parseDouble(parts[3]);
+                double adjustedClose = Double.parseDouble(parts[2]);
+                double volume = parts.length > 7 ? Double.parseDouble(parts[7]) : 0.0;
 
-                candles.add(new PriceCandle(date, open, high, low, close, volume));
+                candles.add(new PriceCandle(date, open, high, low, close, adjustedClose, volume));
             }
         } catch (NumberFormatException  | IndexOutOfBoundsException e) {
             System.err.println("Skipping invalid row: ");

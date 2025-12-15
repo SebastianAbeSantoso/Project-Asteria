@@ -18,7 +18,7 @@ import asteria.services.calculators.trend.SmaCalculatorImpl;
 import asteria.services.calculators.volatility.AtrCalculatorImpl;
 import asteria.services.calculators.volatility.BollingerBandsCalculatorImpl;
 import asteria.services.calculators.momentum.StochasticCalculatorImpl;
-import asteria.services.dataimport.csv.CsvImporterImpl;
+import asteria.services.dataimport.csv.YahooCsvImporterImpl;
 import asteria.services.bridge.StockService;
 
 public class AsteriaApplication extends Application {
@@ -30,7 +30,7 @@ public class AsteriaApplication extends Application {
         databaseManager.initializeDatabase();
 
         PriceHistoryRepository repository = new PriceHistoryRepository(sqliteConnectionFactory);
-        CsvImporterImpl csvImporter = new CsvImporterImpl(repository);
+        YahooCsvImporterImpl csvImporter = new YahooCsvImporterImpl(repository);
 
         SmaCalculatorImpl smaCalculator = new SmaCalculatorImpl();
         EmaCalculatorImpl emaCalculatorImpl = new EmaCalculatorImpl();
@@ -44,6 +44,7 @@ public class AsteriaApplication extends Application {
         ChatHistory chatHistory = new ChatHistory();
         ChatHistoryManager chatHistoryManager = new ChatHistoryManager("data/ai/chat_log.txt");
         AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager);;
+
 
         AsteriaController controller = new AsteriaController(ai, csvImporter, stockService);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/testing-ui.fxml"));

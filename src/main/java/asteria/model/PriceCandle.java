@@ -8,14 +8,16 @@ public class PriceCandle {
     private double high;
     private double low;
     private double close;
+    private double adjustedclose;
     private double volume;
 
-    public PriceCandle(LocalDate date, double open, double high, double low, double close, double volume){
+    public PriceCandle(LocalDate date, double open, double high, double low, double close, double adjustedclose, double volume){
         this.date = date;
         this.open = open;
         this.high = high;
         this.low = low;
         this.close = close;
+        this.adjustedclose = adjustedclose;
         this.volume = volume;
     }
 
@@ -39,12 +41,16 @@ public class PriceCandle {
         return close;
     }
 
+    public double getAdjustedclose() {
+        return adjustedclose;
+    }
+
     public double getVolume() {
         return volume;
     }
 
     @Override
     public String toString(){
-        return "PriceCandle{" + "date= " + date + ", open= " + open + ", high" + high + ", low=" + low + ", close=" + close + ", volume=" + volume + '}';
+        return "PriceCandle{" + "date= " + date + ", open= " + open + ", high" + high + ", low=" + low + ", close=" + close + ", Adjusted Close=" + adjustedclose + ", volume=" +  volume;
     }
 }

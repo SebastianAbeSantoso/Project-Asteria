@@ -22,8 +22,8 @@ public class PriceHistoryRepository implements ISqliteLoadCandles {
     public void saveCandles(String symbol, List<PriceCandle> price_history) throws SQLException {
         String deleteSQL = "DELETE FROM price_history WHERE symbol = ?";
         String insertSQL = "INSERT INTO price_history" +
-                "(symbol, date, open, high, low, close, volume)" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                "(symbol, date, open, high, low, close, adjustedClose, volume)" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conn = db.getConnection();) {
             conn.setAutoCommit(false);
@@ -41,7 +41,8 @@ public class PriceHistoryRepository implements ISqliteLoadCandles {
                     insertStmt.setDouble(4, candle.getHigh());
                     insertStmt.setDouble(5, candle.getLow());
                     insertStmt.setDouble(6, candle.getClose());
-                    insertStmt.setDouble(7, candle.getVolume());
+                    insertStmt.setDouble(7, candle.getAdjustedclose());
+                    insertStmt.setDouble(8, candle.getVolume());
                     insertStmt.addBatch();
                 }
 
@@ -58,7 +59,7 @@ public class PriceHistoryRepository implements ISqliteLoadCandles {
 
     public List<PriceCandle> loadCandles(String symbol) throws SQLException {
         String sql = """
-                SELECT date, open, high, low, close, volume
+                SELECT date, open, high, low, close, adjustedClose, volume
                 FROM price_history
                 WHERE symbol = ?;
                 ORDER BY date;
@@ -78,9 +79,10 @@ public class PriceHistoryRepository implements ISqliteLoadCandles {
                     double high = rs.getDouble("high");
                     double low = rs.getDouble("low");
                     double close = rs.getDouble("close");
+                    double adjustedCLose = rs.getDouble("adjustedClose");
                     double volume = rs.getDouble("volume");
 
-                    result.add(new PriceCandle(date, open, high, low, close, volume));
+                    result.add(new PriceCandle(date, open, high, low, close, adjustedCLose, volume));
                 }
             }
         }
