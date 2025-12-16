@@ -53,8 +53,8 @@ public class AsteriaController {
     @FXML
     private void handleInput(ActionEvent event) throws SQLException, IOException {
         String prompt = promptInput.getText();
-        String symbol = "BBCA.JK";
-        if (calcModeInput.getText().equals("data")) prompt = prompt + "\n" + stockCalculationSuite.getFullAnalysis(symbol);
+        String symbol = calcModeInput.getText() ;
+        if (calcModeInput.getText().equals(symbol)) prompt = prompt + "\n" + stockCalculationSuite.getFullAnalysis(symbol);
 
         AIresult = messageSender.sendMessage(prompt);
         result.clear();
