@@ -10,5 +10,4 @@ import java.util.List;
 public interface MacdCalculator {
     MacdResult calculateMacd(List<PriceCandle> candles, int fastPeriod, int slowPeriod, int signalPeriod) throws SQLException, IOException;
     MacdResult calculateMacd(List<PriceCandle> candles) throws SQLException, IOException;
-
 }

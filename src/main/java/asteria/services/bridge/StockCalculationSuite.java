@@ -14,6 +14,7 @@ public interface StockCalculationSuite {
     double getEma(String symbol, int period) throws SQLException, IOException;
     double getRsi(String symbol, int period) throws SQLException, IOException;
     MacdResult getMacd(String symbol, int fastPeriod, int slowPeriod, int signalPeriod) throws SQLException, IOException;
+    MacdResult getMacd(String symbol) throws SQLException, IOException;
     BollingerBandsResult getBollingerBands(String symbol) throws SQLException;
     BollingerBandsResult getCustomBollingerBands(String symbol, int period, double stdDev) throws SQLException;
     List<Double> getAtr(String symbol, int period) throws SQLException;

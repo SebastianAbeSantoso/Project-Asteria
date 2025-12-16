@@ -1,7 +1,7 @@
 package asteria.services.application;
 
 import asteria.services.ai.ChatHistoryManager;
-import asteria.services.ai.InsightRules;
+import asteria.services.insight.InsightRules;
 import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;

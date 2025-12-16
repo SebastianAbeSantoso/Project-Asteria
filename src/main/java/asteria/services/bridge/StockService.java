@@ -110,7 +110,6 @@ public class StockService implements StockCalculationSuite {
                 macd,
                 bb,
                 stoch
-
         );
     }
 }

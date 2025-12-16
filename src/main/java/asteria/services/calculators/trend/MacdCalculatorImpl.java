@@ -19,10 +19,6 @@ public class MacdCalculatorImpl extends BaseCalculator implements MacdCalculator
         this.emaCalc = emaCalc;
     }
 
-    public MacdResult calculateMacd(List<PriceCandle> candles) {
-        return calculateMacd(candles, 12, 26, 9);
-    }
-
     public MacdResult calculateMacd (List<PriceCandle> candles, int fastPeriod, int slowPeriod, int signalPeriod) {
         if (!hasEnoughData(candles, slowPeriod + signalPeriod)) return new MacdResult(Double.NaN, Double.NaN, Double.NaN);
 
@@ -47,6 +43,10 @@ public class MacdCalculatorImpl extends BaseCalculator implements MacdCalculator
         histogramLine = macdLine - signalLine;
 
         return new MacdResult(macdLine, signalLine, histogramLine);
+    }
+
+    public MacdResult calculateMacd(List<PriceCandle> candles) {
+        return calculateMacd(candles, 12, 26, 9);
     }
 
     public double getHistogramLine() {
