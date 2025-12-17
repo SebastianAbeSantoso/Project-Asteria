@@ -51,7 +51,6 @@ public class PriceHistoryRepository implements SqliteLoadCandles {
     }
 
     public void upsertData(String symbol, List<PriceCandle> price_history) throws SQLException {
-        // language=SQLite
         String upsertSQL = """
         INSERT INTO price_history
             (symbol, date, open, high, low, close, adjustedClose, volume)
