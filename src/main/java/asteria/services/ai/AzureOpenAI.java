@@ -1,5 +1,6 @@
 package asteria.services.ai;
 
+import asteria.security.KeyProvider;
 import asteria.services.bridge.StockCalculationSuite;
 import com.azure.ai.openai.OpenAIAsyncClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
@@ -15,19 +16,21 @@ import java.util.List;
 public class AzureOpenAI implements MessageSender {
     private final ChatCompletionService chatService;
     private final ChatHistory chatHistory;
+    private final KeyProvider keyProvider;
     private final ChatHistoryManager chatHistoryManager;
     private final Kernel kernel;
-    public AzureOpenAI(ChatHistory chatHistory, ChatHistoryManager chatHistoryManager) {
+    public AzureOpenAI(ChatHistory chatHistory, ChatHistoryManager chatHistoryManager, KeyProvider keyProvider) {
+        this.keyProvider = keyProvider;
         this.chatHistory = chatHistory;
         this.chatHistoryManager = chatHistoryManager;
 
         OpenAIAsyncClient client = new OpenAIClientBuilder()
-                .credential(new AzureKeyCredential("40MRj0fd7wtdSWOjvOGfc1R1nSunaBPJ6pUAjCWrQUMaUgV4onVzJQQJ99BFACfhMk5XJ3w3AAAAACOGPLIF"))
+                .credential(new AzureKeyCredential(keyProvider.getKey()))
                 .endpoint("https://sebas-mbs1z6xr-swedencentral.openai.azure.com/")
                 .buildAsyncClient();
 
         this.chatService = OpenAIChatCompletion.builder()
-                .withModelId("gpt-5.1-chat")
+                .withModelId("gpt-5.2-chat")
                 .withOpenAIAsyncClient(client)
                 .build();
 

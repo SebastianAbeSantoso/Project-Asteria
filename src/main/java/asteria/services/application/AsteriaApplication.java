@@ -1,7 +1,8 @@
 package asteria.services.application;
 
+import asteria.security.KeyProviderImpl;
 import asteria.services.ai.ChatHistoryManager;
-import asteria.services.insight.InsightRules;
+import asteria.services.insight.InsightRulesImpl;
 import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;
@@ -46,13 +47,13 @@ public class AsteriaApplication extends Application {
         StochasticCalculatorImpl stochasticCalculator = new StochasticCalculatorImpl();
         StockService stockService = new StockService(repository, smaCalculator, emaCalculatorImpl, macdCalculator, rsiCalculator, bollingerCalculator,  atrCalculator, stochasticCalculator);
 
-        InsightRules insightRules = new InsightRules(stockService);
+        InsightRulesImpl insightRulesImpl = new InsightRulesImpl(stockService);
+        KeyProviderImpl keyProvider = new KeyProviderImpl();
         ChatHistory chatHistory = new ChatHistory();
         ChatHistoryManager chatHistoryManager = new ChatHistoryManager("data/ai/chat_log.txt");
-        AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager);;
+        AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager, keyProvider);;
 
-
-        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, yahooFinanceDownloader);
+        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);

@@ -50,6 +50,12 @@ public class StockService implements StockCalculationSuite {
         return macdCalc.calculateMacd(data, fastPeriod, slowPeriod, signalPeriod);
     }
 
+    public MacdResult getMacd(String symbol) throws SQLException, IOException {
+        List<PriceCandle> data = repository.loadCandles(symbol);
+        return macdCalc.calculateMacd(data);
+    }
+
+
     public double getRsi(String symbol, int period) throws SQLException, IOException {
         List<PriceCandle> data = repository.loadCandles(symbol);
          return rsiCalc.calculateRsi(data, period);
