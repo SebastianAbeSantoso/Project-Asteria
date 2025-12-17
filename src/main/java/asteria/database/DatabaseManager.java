@@ -57,7 +57,8 @@ public class DatabaseManager {
                     low REAL,
                     close REAL,
                     adjustedClose REAL,
-                    volume REAL
+                    volume REAL,
+                    UNIQUE(symbol, date)
                     );
                     """;
 

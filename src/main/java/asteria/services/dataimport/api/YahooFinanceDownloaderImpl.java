@@ -16,6 +16,8 @@ public class YahooFinanceDownloaderImpl implements YahooFinanceDownloader {
 
         Files.createDirectories(outCsv.getParent());
 
+        Files.deleteIfExists(outCsv);
+
         ProcessBuilder pb = new ProcessBuilder(
                 exePath.toAbsolutePath().toString(),
                 symbol,

@@ -5,6 +5,6 @@ import asteria.model.PriceCandle;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ISqliteLoadCandles {
-    public List<PriceCandle> loadCandles(String symbol) throws SQLException;
+public interface SqliteLoadCandles {
+    List<PriceCandle> loadCandles(String symbol) throws SQLException;
 }

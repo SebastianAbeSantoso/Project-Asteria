@@ -72,4 +72,6 @@ public class StochasticCalculatorImpl extends BaseCalculator implements Stochast
     public List<StochasticResult> getStandardStochastic(List<PriceCandle> candles) {
         return getStochastic(candles, 14, 3);
     }
+
+
 }

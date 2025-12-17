@@ -1,10 +1,12 @@
 package asteria.services.insight;
 
 import asteria.model.BollingerBandsResult;
+import asteria.model.StochasticResult;
 import asteria.services.bridge.StockCalculationSuite;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import static java.lang.Math.abs;
 
@@ -38,8 +40,9 @@ public class InsightRulesImpl implements InsightRules {
     }
 
     public Momentum getMomentum(String symbol) throws SQLException, IOException {
-        double stochDValue = stockCalculationSuite.getStandardStochastic(symbol).getLast().getdValue();
-        double stochKValue = stockCalculationSuite.getStandardStochastic(symbol).getLast().getkValue();
+        List<StochasticResult> stochList = stockCalculationSuite.getStandardStochastic(symbol);
+        double stochDValue = stochList.getLast().getdValue();
+        double stochKValue = stochList.getLast().getkValue();
 
         double rsi14 = stockCalculationSuite.getRsi(symbol, 14);
         double hist = stockCalculationSuite.getMacd(symbol).getHistogram();

@@ -51,7 +51,7 @@ public class YahooCsvImporterImpl implements YahooCsvImporter {
         }
 
         try {
-            priceRepo.saveCandles(symbol, candles);
+            priceRepo.upsertData(symbol, candles);
             System.out.println("Imported " + candles.size() + " rows for symbol " + symbol);
 
         } catch (Exception e) {
