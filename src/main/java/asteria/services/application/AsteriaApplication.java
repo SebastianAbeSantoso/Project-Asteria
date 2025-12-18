@@ -4,12 +4,13 @@ import asteria.security.KeyProviderImpl;
 import asteria.services.ai.ChatHistoryManager;
 import asteria.services.insight.InsightRulesImpl;
 import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
+import asteria.services.orchestrator.AsteriaOrchestrator;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import asteria.controller.AsteriaController;
+import asteria.controller.DashboardController;
 import asteria.database.DatabaseManager;
 import asteria.database.SqliteConnectionFactory;
 import asteria.repository.PriceHistoryRepository;
@@ -53,7 +54,8 @@ public class AsteriaApplication extends Application {
         ChatHistoryManager chatHistoryManager = new ChatHistoryManager("data/ai/chat_log.txt");
         AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager, keyProvider);;
 
-        AsteriaController controller = new AsteriaController(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
+        AsteriaOrchestrator orchestrator = new AsteriaOrchestrator(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
+        DashboardController controller = new DashboardController(orchestrator);
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/testing-ui.fxml"));
         fxmlLoader.setController(controller);
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
