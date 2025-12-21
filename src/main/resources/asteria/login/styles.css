@@ -28,8 +28,9 @@
             #2c2636 50%,
             #1f0431 100%
     );
+
     -fx-font-family: "Segoe UI";
-    -fx-background-image: url('images/Background.png');
+    -fx-background-image: url('../../images/Background.png');
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
     -fx-background-position: center center;
@@ -96,7 +97,7 @@
 }
 
 #appLogo {
-    -fx-background-image: url('images/Logo.png');
+    -fx-background-image: url('../../images/Logo.png');
     -fx-max-height: 300px;
     -fx-max-width: 300px;
     -fx-background-repeat: stretch;

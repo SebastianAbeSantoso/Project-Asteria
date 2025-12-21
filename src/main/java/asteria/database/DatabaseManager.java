@@ -7,9 +7,9 @@ import java.nio.file.Path;
 import java.sql.*;
 
 public class DatabaseManager {
-    private final IConnectionFactory dbFactory;
+    private final ConnectionFactory dbFactory;
 
-    public DatabaseManager(IConnectionFactory dbFactory) {
+    public DatabaseManager(ConnectionFactory dbFactory) {
         this.dbFactory = dbFactory;
     }
 

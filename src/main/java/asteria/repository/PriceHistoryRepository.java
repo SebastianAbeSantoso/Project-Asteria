@@ -1,6 +1,6 @@
 package asteria.repository;
 
-import asteria.database.IConnectionFactory;
+import asteria.database.ConnectionFactory;
 import asteria.model.PriceCandle;
 
 import java.sql.Connection;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PriceHistoryRepository implements SqliteLoadCandles {
-    private final IConnectionFactory db;
+    private final ConnectionFactory db;
 
-    public PriceHistoryRepository(IConnectionFactory db) {
+    public PriceHistoryRepository(ConnectionFactory db) {
         this.db = db;
     }
 

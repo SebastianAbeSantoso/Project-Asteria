@@ -56,9 +56,11 @@ public class AsteriaApplication extends Application {
 
         AsteriaOrchestrator orchestrator = new AsteriaOrchestrator(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
         DashboardController controller = new DashboardController(orchestrator);
-        FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/testing-ui.fxml"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/dashboard/asteria-dashboard.fxml"));
         fxmlLoader.setController(controller);
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
 
         stage.setTitle("Asteria");
         stage.setScene(scene);

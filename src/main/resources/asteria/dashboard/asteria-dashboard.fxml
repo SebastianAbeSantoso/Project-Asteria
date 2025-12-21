@@ -1,30 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0"
-            xmlns="http://javafx.com/javafx/17"
+<AnchorPane prefHeight="800" prefWidth="1280"
+            stylesheets="@styles.css"
+            xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1">
 
-    <ScrollPane prefHeight="200.0" prefWidth="200.0">
-        <VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-                <VBox prefHeight="200.0" prefWidth="100.0"/>
-                <HBox prefHeight="100.0" prefWidth="200.0"/>
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <HBox prefHeight="100.0" prefWidth="200.0"/>
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <HBox prefHeight="100.0" prefWidth="200.0"/>
-                </VBox>
-                <VBox prefHeight="200.0" prefWidth="100.0">
-                    <HBox prefHeight="100.0" prefWidth="200.0"/>
-                </VBox>
+    <ScrollPane id="scroll-viewport" fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" styleClass="scroll-pane" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+
+        <VBox alignment="TOP_CENTER" spacing="25" styleClass="page" prefWidth="1280">
+
+            <VBox alignment="CENTER" spacing="8" styleClass="header">
+                <Pane prefHeight="120" prefWidth="120" styleClass="logo"/>
+
+                <Label text="ASTERIA" styleClass="title"/>
+
+                <Label text="Insights of the stars" styleClass="subtitle"/>
             </VBox>
+
+            <HBox id="greeting-bar" alignment="CENTER_LEFT" styleClass="greeting-bar">
+                <Label text="Greetings, astral ✦" styleClass="greeting-text"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="☾" styleClass="moon-icon"/>
+            </HBox>
+
+            <VBox styleClass="section" spacing="10" maxWidth="1060">
+                <Label text="WATCHLIST" styleClass="section-title"/>
+
+                <HBox spacing="14" alignment="CENTER_LEFT">
+                    <VBox styleClass="chip, chip-selected" spacing="4">
+                        <Label fx:id="analysisTitle" text="BBCA" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="9,250" styleClass="chip-price"/>
+                            <Label text="+2.3%" styleClass="chip-up"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="chip" spacing="4">
+                        <Label text="TLKM" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="3,180" styleClass="chip-price"/>
+                            <Label text="-0.8%" styleClass="chip-down"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="chip" spacing="4">
+                        <Label text="ASII" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="5,425" styleClass="chip-price"/>
+                            <Label text="+1.5%" styleClass="chip-up"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="chip" spacing="4">
+                        <Label text="BMRI" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="6,100" styleClass="chip-price"/>
+                            <Label text="+0.4%" styleClass="chip-up"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="chip" spacing="4">
+                        <Label text="ASII" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="5,425" styleClass="chip-price"/>
+                            <Label text="+1.5%" styleClass="chip-up"/>
+                        </HBox>
+                    </VBox>
+
+                    <VBox styleClass="chip" spacing="4">
+                        <Label text="ASII" styleClass="chip-symbol"/>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="5,425" styleClass="chip-price"/>
+                            <Label text="+1.5%" styleClass="chip-up"/>
+                        </HBox>
+                    </VBox>
+
+
+                </HBox>
+            </VBox>
+
+            <VBox styleClass="section" spacing="12" maxWidth="1060">
+                <Label text="BBCA ANALYSIS" styleClass="section-title, centered"/>
+
+                <HBox spacing="18">
+                    <VBox styleClass="card, card-big" HBox.hgrow="ALWAYS" spacing="10">
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="↗" styleClass="card-icon, card-icon-green"/>
+                            <Label text="Trend Signal" styleClass="card-kicker"/>
+                        </HBox>
+                        <Label fx:id="trendValue" text="Gentle upward" styleClass="card-title"/>
+                    </VBox>
+
+                    <VBox styleClass="card, card-big" HBox.hgrow="ALWAYS" spacing="10">
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label text="〰" styleClass="card-icon"/>
+                            <Label text="Volatility" styleClass="card-kicker"/>
+                        </HBox>
+                        <Label fx:id="volValue" text="Low and calm" styleClass="card-title"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="18">
+                    <VBox styleClass="card, card-small" HBox.hgrow="ALWAYS" spacing="8">
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="↗" styleClass="mini-icon, card-icon-green"/>
+                            <Label text="Market Mood" styleClass="mini-kicker"/>
+                        </HBox>
+                        <Label fx:id="marketMoodPill" text="Uptrend" styleClass="pill"/>
+                    </VBox>
+
+                    <VBox styleClass="card, card-small" HBox.hgrow="ALWAYS" spacing="8">
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="◉" styleClass="mini-icon"/>
+                            <Label text="Watchlist" styleClass="mini-kicker"/>
+                        </HBox>
+                        <Label fx:id="watchlistCount" text="4 symbols" styleClass="mini-value"/>
+                    </VBox>
+
+                    <VBox styleClass="card, card-small" HBox.hgrow="ALWAYS" spacing="8">
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="✦" styleClass="mini-icon"/>
+                            <Label text="AI Suggests" styleClass="mini-kicker"/>
+                        </HBox>
+                        <Label fx:id="aiSuggestValue" text="Review BBCA" styleClass="mini-value"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <Region prefHeight="30"/>
+
         </VBox>
     </ScrollPane>
-
 </AnchorPane>
