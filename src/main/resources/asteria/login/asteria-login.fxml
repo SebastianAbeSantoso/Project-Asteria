@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="1080" prefWidth="1920" stylesheets="project_asteria/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" prefHeight="1080" prefWidth="1920" stylesheets="styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 
     <Pane id="appLogo" prefHeight="300" prefWidth="300">
         <VBox.margin>
