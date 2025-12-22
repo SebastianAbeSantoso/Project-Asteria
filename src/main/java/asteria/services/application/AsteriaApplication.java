@@ -11,6 +11,7 @@ import asteria.services.watchlist.WatchlistServiceImpl;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import asteria.controller.DashboardController;
@@ -65,8 +66,11 @@ public class AsteriaApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/dashboard/asteria-dashboard.fxml"));
         fxmlLoader.setController(controller);
 
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
+        Parent root = fxmlLoader.load();
+        int currentUserId = 1;
+        controller.setContext(watchlistServiceimpl, currentUserId);
 
+        Scene scene = new Scene(root, 1280, 800);
         stage.setTitle("Asteria");
         stage.setScene(scene);
         stage.show();

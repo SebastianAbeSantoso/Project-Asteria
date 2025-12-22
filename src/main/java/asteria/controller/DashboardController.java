@@ -52,7 +52,6 @@ public class DashboardController {
         );
     }
 
-
     public void setContext(WatchlistService service, int userId) {
         this.watchlistService = service;
         this.currentUserId = userId;
