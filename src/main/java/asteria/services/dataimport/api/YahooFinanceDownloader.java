@@ -5,4 +5,5 @@ import java.nio.file.Path;
 
 public interface YahooFinanceDownloader {
     Path download(String symbol, Path outCsv) throws IOException, InterruptedException;
+    boolean symbolExists(String symbol);
 }

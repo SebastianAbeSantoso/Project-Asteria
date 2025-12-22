@@ -1,9 +1,11 @@
 package asteria.services.watchlist;
 
+import asteria.repository.WatchlistRepository;
+
 public class WatchlistServiceImpl implements WatchlistService {
     private final asteria.repository.WatchlistRepository repo;
 
-    public WatchlistServiceImpl(asteria.repository.WatchlistRepository repo) {
+    public WatchlistServiceImpl(WatchlistRepository repo) {
         this.repo = repo;
     }
 
@@ -22,4 +24,23 @@ public class WatchlistServiceImpl implements WatchlistService {
 
         new Thread(task, "watchlist-service").start();
     }
+
+    @Override
+    public void addToWatchlist(int userId, String symbol, String nickname,
+                               Runnable onSuccess,
+                               java.util.function.Consumer<Throwable> onError) {
+
+        javafx.concurrent.Task<Void> task = new javafx.concurrent.Task<>() {
+            @Override protected Void call() throws Exception {
+                repo.addToWatchlist(userId, symbol, nickname);
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> javafx.application.Platform.runLater(onSuccess));
+        task.setOnFailed(e -> onError.accept(task.getException()));
+
+        new Thread(task, "watchlist-add").start();
+    }
+
 }

@@ -95,4 +95,24 @@ public class PriceHistoryRepository implements SqliteLoadCandles {
             }
         }
     }
+
+    public boolean symbolExistsInDb(String symbol) throws SQLException {
+        String sql = """
+        SELECT 1
+        FROM price_history
+        WHERE symbol = ?
+        LIMIT 1
+        """;
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, symbol);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
 }

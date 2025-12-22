@@ -46,4 +46,29 @@ public class YahooFinanceDownloaderImpl implements YahooFinanceDownloader {
         return outCsv;
 
     }
+
+    @Override
+    public boolean symbolExists(String symbol) {
+        if (symbol == null || symbol.isBlank()) return false;
+
+        try {
+            Path tmpDir = Files.createTempDirectory("asteria-yf-");
+            Path tmpCsv = tmpDir.resolve("probe_" + sanitize(symbol) + ".csv");
+
+            try {
+                download(symbol.trim().toUpperCase(), tmpCsv);
+
+                return Files.exists(tmpCsv) && Files.size(tmpCsv) >= 100;
+            } finally {
+                try { Files.deleteIfExists(tmpCsv); } catch (Exception ignored) {}
+                try { Files.deleteIfExists(tmpDir); } catch (Exception ignored) {}
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private String sanitize(String s) {
+        return s.replaceAll("[^a-zA-Z0-9._-]", "_");
+    }
 }

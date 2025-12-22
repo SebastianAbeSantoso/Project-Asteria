@@ -49,6 +49,7 @@ public class InsightRulesImpl implements InsightRules {
 
         if (rsi14 > 70 && stochKValue > 80 && stochDValue > stochKValue && hist < 0) return Momentum.BEARISH;
         if (30 > rsi14 && 20 > stochKValue && stochKValue > stochDValue && hist > 0) return Momentum.BULLISH;
+
         else return Momentum.NEUTRAL;
     }
 

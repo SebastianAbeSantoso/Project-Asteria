@@ -59,7 +59,7 @@ public class AsteriaApplication extends Application {
         ChatHistoryManager chatHistoryManager = new ChatHistoryManager("data/ai/chat_log.txt");
         AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager, keyProvider);;
 
-        AsteriaOrchestrator orchestrator = new AsteriaOrchestrator(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
+        AsteriaOrchestrator orchestrator = new AsteriaOrchestrator(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl, repository);
         DashboardController controller = new DashboardController(orchestrator, watchlistServiceimpl);
 
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/dashboard/asteria-dashboard.fxml"));

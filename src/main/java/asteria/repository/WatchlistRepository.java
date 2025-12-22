@@ -2,7 +2,6 @@ package asteria.repository;
 
 import asteria.database.ConnectionFactory;
 import asteria.model.WatchlistItem;
-import asteria.model.WatchlistItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -108,11 +107,15 @@ public class WatchlistRepository {
         return loadWatchlistItems(symbols);
     }
 
-    public void addToWatchlist(int userId, String symbol, String nickname) throws SQLException {
+    public boolean addToWatchlist(int userId, String symbol, String nickname) throws SQLException {
         String sql = """
-            INSERT INTO watchlist (user_id, symbol, nickname, is_active)
-            VALUES (?, ?, ?, 1)
-            """;
+        INSERT INTO watchlist (user_id, symbol, nickname, is_active)
+        VALUES (?, ?, ?, 1)
+        ON CONFLICT(user_id, symbol)
+        DO UPDATE SET
+            is_active = 1,
+            nickname = COALESCE(EXCLUDED.nickname, watchlist.nickname)
+        """;
 
         try (Connection conn = db.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -120,9 +123,12 @@ public class WatchlistRepository {
             stmt.setInt(1, userId);
             stmt.setString(2, symbol);
             stmt.setString(3, nickname);
-            stmt.executeUpdate();
+
+            int affected = stmt.executeUpdate();
+            return affected > 0;
         }
     }
+
 
     public void removeFromWatchlist(int userId, String symbol) throws SQLException {
         String sql = """
