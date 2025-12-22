@@ -1,6 +1,10 @@
 package asteria.controller;
 
+import asteria.model.MarketInsight;
+import asteria.model.MarketSnapshot;
+import asteria.model.MarketView;
 import asteria.model.WatchlistItem;
+import asteria.services.insight.InsightRulesImpl;
 import asteria.services.orchestrator.AsteriaOrchestrator;
 import asteria.services.watchlist.WatchlistService;
 import javafx.application.Platform;
@@ -17,8 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class DashboardController {
@@ -32,6 +34,12 @@ public class DashboardController {
     @FXML private VBox watchlistSection;
     @FXML private HBox watchlistBox;
     @FXML private Label chatSymbolIndicator;
+    @FXML private Label analysisTitle;
+    @FXML private Label trendValue;
+    @FXML private Label volValue;
+    @FXML private Label marketMoodPill;
+    @FXML private Label watchlistCount;
+    @FXML private Label aiSuggestValue;
 
     private final ObservableList<WatchlistItem> watchItems = FXCollections.observableArrayList();
     public DashboardController(AsteriaOrchestrator orchestrator, WatchlistService watchlistService) {
@@ -63,7 +71,15 @@ public class DashboardController {
 
         watchlistService.refreshWatchlist(
                 currentUserId,
-                items -> Platform.runLater(() -> watchItems.setAll(items)),
+                items -> Platform.runLater(() -> {
+                    watchItems.setAll(items);
+
+                    if (symbol == null && !items.isEmpty()) {
+                        symbol = items.getFirst().getSymbol();
+                        updateChatSymbolIndicator();
+                        refreshAnalysis(symbol);
+                    }
+                }),
                 err -> err.printStackTrace()
         );
     }
@@ -100,20 +116,54 @@ public class DashboardController {
         chip.getChildren().addAll(sym, row);
 
         chip.setOnMouseClicked(e -> {
+            symbol = item.getSymbol();
+            updateChatSymbolIndicator();
+            refreshAnalysis(symbol);
+        });
+
+        chip.setOnMouseClicked(e -> {
+            if (e.getClickCount() == 2) {
+                handleRemoveSymbol(item.getSymbol());
+            } else {
+                symbol = item.getSymbol();
+                updateChatSymbolIndicator();
+                refreshAnalysis(symbol);
+            }
         });
 
         return chip;
     }
 
-    @FXML
-    private void handleInput(ActionEvent event) throws SQLException, IOException {
+    private void handleRemoveSymbol(String removedSymbol) {
+        if (watchlistService == null) return;
 
+        watchItems.removeIf(w -> w.getSymbol().equalsIgnoreCase(removedSymbol));
+
+        watchlistService.removeFromWatchlist(
+                currentUserId,
+                removedSymbol,
+                () -> {
+                    appendChat("Asteria✦", " Removed " + removedSymbol + " from your watchlist.");
+
+                    if (symbol != null && symbol.equalsIgnoreCase(removedSymbol)) {
+                        String next = watchItems.isEmpty() ? null : watchItems.getFirst().getSymbol();
+                        symbol = next;
+                        updateChatSymbolIndicator();
+
+                        if (symbol != null) refreshAnalysis(symbol);
+                        else showAnalysisError();
+                    }
+
+                    refreshWatchlist();
+                },
+                err -> {
+                    err.printStackTrace();
+                    appendChat("Asteria ✦", "✦ Failed to remove " + removedSymbol + ".");
+                    refreshWatchlist();
+                }
+        );
     }
 
-    @FXML
-    private void handleImport(ActionEvent event) {
-
-    }
 
     @FXML
     private void handleSend(ActionEvent event) {
@@ -125,7 +175,7 @@ public class DashboardController {
 
         String aiMessage = orchestrator.getOpenAiResponse(msg, symbol);
 
-        appendChat("Asteria ✦, ", " the star heard: \"" + aiMessage + "\"");
+        appendChat("Asteria✦ ", "\"" + aiMessage + "\"");
     }
 
     private void appendChat(String who, String text) {
@@ -139,7 +189,6 @@ public class DashboardController {
 
     @FXML
     private void handleSetChatSymbol(ActionEvent event) {
-
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Set Symbol");
         dialog.setHeaderText("Enter a stock symbol");
@@ -151,7 +200,7 @@ public class DashboardController {
         String symbolInput = result.get().trim().toUpperCase();
         if (symbolInput.isBlank()) return;
 
-        appendChat("Asteria ✦", ", Consulting the stars for " + symbolInput + "…");
+        appendChat("Asteria ✦", " Consulting the stars for " + symbolInput + "…");
 
         Task<Void> task = new Task<>() {
             @Override
@@ -161,10 +210,8 @@ public class DashboardController {
                     if (!orchestrator.symbolExistsOnYahoo(symbolInput)) {
                         throw new IllegalArgumentException("Symbol not found");
                     }
-
                     orchestrator.insertCsv(symbolInput);
                 }
-
                 watchlistService.addToWatchlist(
                         currentUserId,
                         symbolInput,
@@ -173,37 +220,36 @@ public class DashboardController {
                             symbol = symbolInput;
                             updateChatSymbolIndicator();
                             refreshWatchlist();
-                            appendChat("Asteria ✦",
+                            appendChat("Asteria",
                                     "✦ " + symbolInput + " has been added to your watchlist.");
                         },
                         err -> {
                             err.printStackTrace();
-                            appendChat("Asteria ✦",
+                            appendChat("Asteria",
                                     "✦ Failed to add " + symbolInput + " to your watchlist.");
                         }
                 );
-
                 symbol = symbolInput;
-
                 return null;
             }
         };
 
         task.setOnSucceeded(e -> {
-            appendChat("Asteria ✦",
+            appendChat("Asteria",
                     "✦ " + symbolInput + " is now written among the stars.");
             updateChatSymbolIndicator();
             refreshWatchlist();
+            refreshAnalysis(symbolInput);
         });
 
         task.setOnFailed(e -> {
             Throwable ex = task.getException();
 
             if (ex instanceof IllegalArgumentException) {
-                appendChat("Asteria ✦",
+                appendChat("Asteria",
                         "✦ I cannot find " + symbolInput + " in the astral records.");
             } else {
-                appendChat("Asteria ✦",
+                appendChat("Asteria",
                         "✦ A disturbance occurred while reading " + symbolInput + ".");
                 ex.printStackTrace();
             }
@@ -212,11 +258,103 @@ public class DashboardController {
         new Thread(task, "symbol-setup").start();
     }
 
-
-
     private void updateChatSymbolIndicator() {
         if (chatSymbolIndicator == null) return;
 
         chatSymbolIndicator.setText(symbol == null ? "Context: none" : "Context: " + symbol);
+    }
+
+    @FXML
+    private void handleUpdateSymbol(ActionEvent event) {
+        String ctx = (symbol == null) ? null : symbol.trim().toUpperCase();
+        if (ctx == null || ctx.isBlank()) return;
+
+        appendChat("Asteria", "✦ Updating " + ctx + "…");
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                orchestrator.insertCsv(ctx);
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            appendChat("Asteria", "✦ " + ctx + " updated successfully.");
+            refreshWatchlist();
+            refreshAnalysis(ctx);
+        });
+
+        task.setOnFailed(e -> {
+            Throwable ex = task.getException();
+            appendChat("Asteria", "✦ Update failed for " + ctx + ".");
+            if (ex != null) ex.printStackTrace();
+        });
+
+        new Thread(task, "update-" + ctx).start();
+    }
+
+
+
+    private void applyInsight(MarketInsight i) {
+        switch (i.trend()) {
+            case UP -> trendValue.setText("Gentle upward");
+            case DOWN -> trendValue.setText("Leaning downward");
+            case SIDEWAYS -> trendValue.setText("Sideways drift");
+        }
+
+        switch (i.volatility()) {
+            case LOW -> volValue.setText("Low and calm");
+            case MEDIUM -> volValue.setText("Moderate waves");
+            case HIGH -> volValue.setText("High turbulence");
+        }
+
+        applyMomentumPill(i.momentum());
+    }
+
+    private void applySnapshot(MarketSnapshot s) {
+        analysisTitle.setText(s.symbol() + " ANALYSIS");
+        aiSuggestValue.setText("Review " + s.symbol());
+        watchlistCount.setText(watchItems.size() + " symbols");
+
+    }
+
+        private void refreshAnalysis(String symbol) {
+        Task<MarketView> task = new Task<>() {
+            @Override
+            protected MarketView call() throws Exception {
+                return orchestrator.getMarketView(symbol);
+            }
+        };
+
+            task.setOnSucceeded(e -> {
+                MarketView view = task.getValue();
+                if (view == null || view.snapshot() == null || view.insight() == null) {
+                    showAnalysisError();
+                    return;
+                }
+                applyInsight(view.insight());
+                applySnapshot(view.snapshot());
+            });
+
+        task.setOnFailed(e -> showAnalysisError());
+
+        new Thread(task, "analysis-" + symbol).start();
+    }
+
+    private void applyMomentumPill(InsightRulesImpl.Momentum m) {
+        switch (m) {
+            case BULLISH -> marketMoodPill.setText("Uptrend");
+            case BEARISH -> marketMoodPill.setText("Downtrend");
+            case NEUTRAL -> marketMoodPill.setText("Neutral");
+        }
+    }
+
+    private void showAnalysisError() {
+        analysisTitle.setText("ANALYSIS");
+        trendValue.setText("Unavailable");
+        volValue.setText("Unavailable");
+        marketMoodPill.setText("Unknown");
+        aiSuggestValue.setText("Review");
     }
 }

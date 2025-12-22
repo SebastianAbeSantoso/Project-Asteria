@@ -1,4 +1,5 @@
 package asteria.model;
+import java.util.Locale;
 
 public class WatchlistItem {
     private final String symbol;
@@ -16,11 +17,11 @@ public class WatchlistItem {
     public double getChangePct() { return changePct; }
 
     public String getFormattedPrice() {
-        return String.format("%,.0f", lastClose);
+        return String.format(Locale.US, "%.2f", lastClose);
     }
 
     public String getFormattedChangePct() {
-        return String.format("%+.1f%%", changePct);
+        return String.format(Locale.US, "%+.1f%%", changePct);
     }
 
     public boolean isUp() { return changePct > 0; }

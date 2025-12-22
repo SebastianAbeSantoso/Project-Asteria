@@ -41,6 +41,8 @@ public class InsightRulesImpl implements InsightRules {
 
     public Momentum getMomentum(String symbol) throws SQLException, IOException {
         List<StochasticResult> stochList = stockCalculationSuite.getStandardStochastic(symbol);
+        if (stochList == null || stochList.isEmpty()) return Momentum.NEUTRAL;
+
         double stochDValue = stochList.getLast().getdValue();
         double stochKValue = stochList.getLast().getkValue();
 
@@ -53,9 +55,11 @@ public class InsightRulesImpl implements InsightRules {
         else return Momentum.NEUTRAL;
     }
 
-    public Volatility getVolatility(String symbol) throws SQLException, IOException {
+    public Volatility getVolatility(String symbol) throws SQLException {
         BollingerBandsResult bb = stockCalculationSuite.getBollingerBands(symbol);
-        double atr14 = stockCalculationSuite.getAtr(symbol, 14).getLast();
+        if (bb == null) return Volatility.MEDIUM;
+        //double atr14 = stockCalculationSuite.getAtr(symbol, 14).getLast(); kalo mau implementasi klasifikasi
+
         double price = bb.getMiddleBand();
 
         double bandwidth = (bb.getUpperBand() - bb.getLowerBand()) / price;

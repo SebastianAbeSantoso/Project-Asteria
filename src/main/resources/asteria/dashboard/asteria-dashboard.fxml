@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <AnchorPane prefHeight="800" prefWidth="1280" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
 
     <ScrollPane id="scroll-viewport" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefHeight="897.0" prefWidth="1280.0" styleClass="scroll-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <HBox alignment="CENTER">
 
         <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="25" styleClass="page">
 
@@ -25,23 +27,21 @@
                 <Label styleClass="subtitle" text="Insights of the stars" />
             </VBox>
 
-            <HBox id="greeting-bar" alignment="CENTER_LEFT" styleClass="greeting-bar">
-                <Label styleClass="greeting-text" text="Greetings, astral ✦" />
+            <HBox id="greeting-bar" alignment="CENTER" styleClass="greeting-bar">
+                <Label styleClass="greeting-text" text="Greetings, Astral Traveler ✦" />
                 <Region HBox.hgrow="ALWAYS" />
                 <Label styleClass="moon-icon" text="☾" />
             </HBox>
 
-            <VBox fx:id="watchlistSection" maxWidth="1060" spacing="10" styleClass="section">
+            <VBox fx:id="watchlistSection" maxWidth="1060" minHeight="-Infinity" prefHeight="120.0" prefWidth="1060.0" spacing="10" styleClass="section">
                 <Label styleClass="section-title" text="WATCHLIST" />
-
-                <ScrollPane fx:id="watchlistScroll" fitToHeight="true" pannable="true" prefViewportHeight="76" styleClass="watchlist-scroll" vbarPolicy="NEVER">
-
-                    <HBox fx:id="watchlistBox" alignment="CENTER_LEFT" minHeight="76" spacing="14" styleClass="watchlist-row" />
+                <ScrollPane fx:id="watchlistScroll" pannable="true" prefHeight="85.0" prefViewportHeight="160" prefWidth="1060.0" styleClass="watchlist-scroll" vbarPolicy="NEVER">
+                    <HBox fx:id="watchlistBox" alignment="CENTER_LEFT" spacing="14" styleClass="watchlist-row" />
                 </ScrollPane>
             </VBox>
 
-            <VBox maxWidth="1060" spacing="12" styleClass="section">
-                <Label fx:id="analysisTitle" text="BBCA ANALYSIS" styleClass="section-title, centered"/>
+            <VBox maxWidth="1060" prefHeight="241.0" prefWidth="1060.0" spacing="12" styleClass="section">
+                <Label fx:id="analysisTitle" styleClass="section-title, centered" text="BBCA ANALYSIS" />
 
                 <HBox spacing="18">
                     <VBox spacing="10" styleClass="card, card-big" HBox.hgrow="ALWAYS">
@@ -92,28 +92,30 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="10">
 
-                    <Label text="ASTRAL CHAT" styleClass="section-title"/>
-                    <Label fx:id="chatSymbolIndicator" text="Context: none" styleClass="mini-kicker"/>
+                    <Label styleClass="section-title" text="ASTRAL CHAT" />
+                    <Label fx:id="chatSymbolIndicator" styleClass="mini-kicker" text="Context: none" />
                     <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button text="⟳" styleClass="icon-btn, pink-text" onAction="#handleUpdateSymbol"/>
+
                     <Button text="✦" styleClass="icon-btn, pink-text" onAction="#handleSetChatSymbol"/>
+
+
                 </HBox>
 
-
-                <VBox styleClass="card, chat-card" spacing="10">
-                    <Label text="Oracle Log" styleClass="card-kicker"/>
-                    <TextArea fx:id="chatHistory" promptText="Your star-bound conversation will appear here..." editable="false" wrapText="true" styleClass="chat-area"/>
+                <VBox spacing="10" styleClass="card, chat-card">
+                    <Label styleClass="card-kicker" text="Oracle Log" />
+                    <TextArea fx:id="chatHistory" editable="false" promptText="Your star-bound conversation will appear here..." styleClass="chat-area" wrapText="true" />
                 </VBox>
 
-                <HBox spacing="12" alignment="CENTER_LEFT" styleClass="chat-input-row">
-                    <TextField fx:id="chatInput" promptText="Ask the stars about a symbol… (e.g., BBCA,JK outlook?)" styleClass="chat-field" HBox.hgrow="ALWAYS" onAction="#handleSend"/>
+                <HBox alignment="CENTER_LEFT" spacing="12" styleClass="chat-input-row">
+                    <TextField fx:id="chatInput" onAction="#handleSend" promptText="Ask the stars about a symbol… (e.g., BBCA,JK outlook?)" styleClass="chat-field" HBox.hgrow="ALWAYS" />
 
-                    <Button text="Send" styleClass="chat-send" onAction="#handleSend"/>
+                    <Button onAction="#handleSend" styleClass="chat-send" text="Send" />
                 </HBox>
-
             </VBox>
-
             <Region prefHeight="30" />
-
         </VBox>
+        </HBox>
     </ScrollPane>
 </AnchorPane>

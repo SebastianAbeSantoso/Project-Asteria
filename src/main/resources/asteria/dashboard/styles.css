@@ -97,6 +97,10 @@
 .chip {
     -fx-min-width: 160px;
     -fx-max-width: 160px;
+
+    -fx-min-height: 68px;
+    -fx-pref-height: 80px;
+
     -fx-padding: 12 14 12 14;
 
     -fx-background-color: rgba(0,0,0,0.18);
@@ -304,7 +308,28 @@
 }
 
 .icon-btn {
-    -fx-background-color: black;
+    -fx-background-color: rgba(0,0,0,0.18);
+    -fx-background-radius: 12;
+
+    -fx-border-color: rgba(174, 144, 225, 0.45);
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+
+    -fx-text-fill: rgba(217, 210, 223, 0.95);
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+
+    -fx-min-width: 38px;
+    -fx-min-height: 38px;
+    -fx-cursor: hand;
+}
+
+.icon-btn:hover {
+    -fx-background-color: rgba(174, 144, 225, 0.18);
+}
+
+.icon-btn:pressed {
+    -fx-background-color: rgba(174, 144, 225, 0.10);
 }
 
 .pink-text {

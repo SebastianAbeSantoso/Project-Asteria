@@ -1,6 +1,8 @@
 package asteria.services.orchestrator;
 
+import asteria.model.MarketInsight;
 import asteria.model.MarketSnapshot;
+import asteria.model.MarketView;
 import asteria.repository.PriceHistoryRepository;
 import asteria.services.ai.MessageSender;
 import asteria.services.bridge.StockCalculationSuite;
@@ -117,4 +119,20 @@ public class AsteriaOrchestrator {
         }
     }
 
+    public MarketView getMarketView(String symbol) throws Exception {
+        String sym = symbol.trim().toUpperCase();
+
+        MarketSnapshot snapshot = stockCalculationSuite.getFullAnalysis(sym);
+        if (snapshot == null) {
+            throw new IllegalStateException("No market data for " + sym);
+        }
+
+        MarketInsight insight = new MarketInsight(
+                insightRules.getTrend(sym),
+                insightRules.getMomentum(sym),
+                insightRules.getVolatility(sym)
+        );
+
+        return new MarketView(snapshot, insight);
+    }
 }
