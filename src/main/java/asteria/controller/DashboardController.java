@@ -48,15 +48,9 @@ public class DashboardController {
     }
 
     @FXML
-    private void initialize() {
-        watchlistSection.visibleProperty()
-                .bind(javafx.beans.binding.Bindings.isNotEmpty(watchItems));
-
-        watchlistSection.managedProperty()
-                .bind(watchlistSection.visibleProperty());
-
-        watchItems.addListener(
-                (javafx.collections.ListChangeListener<WatchlistItem>) c -> renderWatchlist()
+    private void initialize() {watchlistSection.visibleProperty().bind(javafx.beans.binding.Bindings.isNotEmpty(watchItems));
+        watchlistSection.managedProperty().bind(watchlistSection.visibleProperty());
+        watchItems.addListener((javafx.collections.ListChangeListener<WatchlistItem>) c -> renderWatchlist()
         );
     }
 
@@ -139,10 +133,7 @@ public class DashboardController {
 
         watchItems.removeIf(w -> w.getSymbol().equalsIgnoreCase(removedSymbol));
 
-        watchlistService.removeFromWatchlist(
-                currentUserId,
-                removedSymbol,
-                () -> {
+        watchlistService.removeFromWatchlist(currentUserId, removedSymbol, () -> {
                     appendChat("Asteria✦", " Removed " + removedSymbol + " from your watchlist.");
 
                     if (symbol != null && symbol.equalsIgnoreCase(removedSymbol)) {
@@ -220,8 +211,6 @@ public class DashboardController {
                             symbol = symbolInput;
                             updateChatSymbolIndicator();
                             refreshWatchlist();
-                            appendChat("Asteria",
-                                    "✦ " + symbolInput + " has been added to your watchlist.");
                         },
                         err -> {
                             err.printStackTrace();
