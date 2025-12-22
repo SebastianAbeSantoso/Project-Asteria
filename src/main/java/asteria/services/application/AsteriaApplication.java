@@ -1,10 +1,13 @@
 package asteria.services.application;
 
+import asteria.repository.WatchlistRepository;
 import asteria.security.KeyProviderImpl;
 import asteria.services.ai.ChatHistoryManager;
 import asteria.services.insight.InsightRulesImpl;
 import asteria.services.dataimport.api.YahooFinanceDownloaderImpl;
 import asteria.services.orchestrator.AsteriaOrchestrator;
+import asteria.services.watchlist.WatchlistService;
+import asteria.services.watchlist.WatchlistServiceImpl;
 import com.microsoft.semantickernel.services.chatcompletion.ChatHistory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +41,8 @@ public class AsteriaApplication extends Application {
 
         PriceHistoryRepository repository = new PriceHistoryRepository(sqliteConnectionFactory);
         YahooCsvImporterImpl csvImporter = new YahooCsvImporterImpl(repository);
+        WatchlistRepository watchlistRepository = new WatchlistRepository(sqliteConnectionFactory);
+        WatchlistServiceImpl watchlistServiceimpl = new WatchlistServiceImpl(watchlistRepository);
 
         SmaCalculatorImpl smaCalculator = new SmaCalculatorImpl();
         EmaCalculatorImpl emaCalculatorImpl = new EmaCalculatorImpl();
@@ -55,7 +60,7 @@ public class AsteriaApplication extends Application {
         AzureOpenAI ai = new AzureOpenAI(chatHistory, chatHistoryManager, keyProvider);;
 
         AsteriaOrchestrator orchestrator = new AsteriaOrchestrator(ai, csvImporter, stockService, yahooFinanceDownloader, insightRulesImpl);
-        DashboardController controller = new DashboardController(orchestrator);
+        DashboardController controller = new DashboardController(orchestrator, watchlistServiceimpl);
 
         FXMLLoader fxmlLoader = new FXMLLoader(AsteriaApplication.class.getResource("/asteria/dashboard/asteria-dashboard.fxml"));
         fxmlLoader.setController(controller);

@@ -2,6 +2,7 @@ package asteria.repository;
 
 import asteria.database.ConnectionFactory;
 import asteria.model.PriceCandle;
+import asteria.model.WatchlistItem;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,7 +58,7 @@ public class PriceHistoryRepository implements SqliteLoadCandles {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT (symbol, date)
         DO UPDATE SET
-            open = EXCLUDED.open, 
+            open = EXCLUDED.open,
             high = EXCLUDED.high, 
             low = EXCLUDED.low, 
             close = EXCLUDED.close, 

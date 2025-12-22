@@ -47,6 +47,11 @@ public class DatabaseManager {
                     );
                     """;
 
+            String createWatchlistIndex = """
+                CREATE UNIQUE INDEX IF NOT EXISTS ux_watchlist_user_symbol
+                ON watchlist (user_id, symbol);
+                """;
+
             String createPriceHistoryTable = """
                     CREATE TABLE IF NOT EXISTS price_history (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -78,6 +83,7 @@ public class DatabaseManager {
 
             stmt.execute(createUsersTable);
             stmt.execute(createWatchlistTable);
+            stmt.execute(createWatchlistIndex);
             stmt.execute(createPriceHistoryTable);
             stmt.execute(createInsightLogsTable);
         }

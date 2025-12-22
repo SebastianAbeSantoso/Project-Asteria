@@ -28,64 +28,26 @@
                 <Label text="☾" styleClass="moon-icon"/>
             </HBox>
 
-            <VBox styleClass="section" spacing="10" maxWidth="1060">
+            <VBox fx:id="watchlistSection" styleClass="section" spacing="10" maxWidth="1060">
                 <Label text="WATCHLIST" styleClass="section-title"/>
 
-                <HBox spacing="14" alignment="CENTER_LEFT">
-                    <VBox styleClass="chip, chip-selected" spacing="4">
-                        <Label fx:id="analysisTitle" text="BBCA" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="9,250" styleClass="chip-price"/>
-                            <Label text="+2.3%" styleClass="chip-up"/>
-                        </HBox>
-                    </VBox>
+                <ScrollPane fx:id="watchlistScroll"
+                            styleClass="watchlist-scroll"
+                            vbarPolicy="NEVER"
+                            fitToHeight="true"
+                            pannable="true"
+                            prefViewportHeight="76">
 
-                    <VBox styleClass="chip" spacing="4">
-                        <Label text="TLKM" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="3,180" styleClass="chip-price"/>
-                            <Label text="-0.8%" styleClass="chip-down"/>
-                        </HBox>
-                    </VBox>
-
-                    <VBox styleClass="chip" spacing="4">
-                        <Label text="ASII" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="5,425" styleClass="chip-price"/>
-                            <Label text="+1.5%" styleClass="chip-up"/>
-                        </HBox>
-                    </VBox>
-
-                    <VBox styleClass="chip" spacing="4">
-                        <Label text="BMRI" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="6,100" styleClass="chip-price"/>
-                            <Label text="+0.4%" styleClass="chip-up"/>
-                        </HBox>
-                    </VBox>
-
-                    <VBox styleClass="chip" spacing="4">
-                        <Label text="ASII" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="5,425" styleClass="chip-price"/>
-                            <Label text="+1.5%" styleClass="chip-up"/>
-                        </HBox>
-                    </VBox>
-
-                    <VBox styleClass="chip" spacing="4">
-                        <Label text="ASII" styleClass="chip-symbol"/>
-                        <HBox spacing="10" alignment="CENTER">
-                            <Label text="5,425" styleClass="chip-price"/>
-                            <Label text="+1.5%" styleClass="chip-up"/>
-                        </HBox>
-                    </VBox>
-
-
-                </HBox>
+                    <HBox fx:id="watchlistBox"
+                          alignment="CENTER_LEFT"
+                          spacing="14"
+                          styleClass="watchlist-row"
+                          minHeight="76"/>
+                </ScrollPane>
             </VBox>
 
             <VBox styleClass="section" spacing="12" maxWidth="1060">
-                <Label text="BBCA ANALYSIS" styleClass="section-title, centered"/>
+                <Label styleClass="section-title, centered"/>
 
                 <HBox spacing="18">
                     <VBox styleClass="card, card-big" HBox.hgrow="ALWAYS" spacing="10">

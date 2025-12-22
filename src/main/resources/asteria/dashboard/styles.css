@@ -206,3 +206,32 @@
     -fx-font-size: 12px;
     -fx-font-weight: 600;
 }
+
+.watchlist-scroll, .watchlist-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.watchlist-scroll {
+    -fx-padding: 0;
+}
+
+.watchlist-scroll .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+.watchlist-scroll .scroll-bar:horizontal .track {
+    -fx-background-color: transparent;
+}
+.watchlist-scroll .scroll-bar:horizontal .thumb {
+    -fx-background-color: rgba(174, 144, 225, 0.35);
+    -fx-background-radius: 10px;
+}
+.watchlist-scroll .scroll-bar:horizontal .increment-button,
+.watchlist-scroll .scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+    -fx-shape: "";
+}
+
+.watchlist-row {
+    -fx-padding: 2 2 8 2;
+}
