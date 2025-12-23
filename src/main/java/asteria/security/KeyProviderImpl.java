@@ -7,7 +7,7 @@ import java.util.Base64;
 public class KeyProviderImpl implements KeyProvider {
 
     private final String S = "AsteriaProject25";
-    String BLOB = "hetp6AH8JdbNyPh7GtnW/RtTux6CaPdm0Vyts1KT4RvTjhbwDXhXb5rMCpkAOYkDQANE95/1LMFIt0NgkOFj6cuXzx+gt+mfvW9DzlnYy0JRCFWzCLeAXF8Utq6OtGTI";
+    String BLOB = "2hetp6AH8JdbNyPh7GtnW/RtTux6CaPdm0Vyts1KT4RvTjhbwDXhXb5rMCpkAOYkDQANE95/1LMFIt0NgkOFj6cuXzx+gt+mfvW9DzlnYy0JRCFWzCLeAXF8Utq6OtGTI1";
 
     public String getKey() {
         try {
