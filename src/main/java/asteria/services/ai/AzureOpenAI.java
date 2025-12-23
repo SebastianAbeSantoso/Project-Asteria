@@ -26,7 +26,7 @@ public class AzureOpenAI implements MessageSender {
 
         OpenAIAsyncClient client = new OpenAIClientBuilder()
                 .credential(new AzureKeyCredential(keyProvider.getKey()))
-                .endpoint("https://sebas-mbs1z6xr-swedencentral.openai.azure.com/")
+                .endpoint("null")
                 .buildAsyncClient();
 
         this.chatService = OpenAIChatCompletion.builder()
